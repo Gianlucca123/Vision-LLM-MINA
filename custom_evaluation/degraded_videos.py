@@ -16,8 +16,7 @@ def degraded_videos(video_path, output_folder_path, output_fps):
     """
     # Define modifications to the video
     # (e.g. resize, blur, noise, black and white, different color space, distortion, etc.)
-    videos_quality = [#"1080p", "720p", "480p",
-                       "240p"]
+    videos_quality = ["1080p", "720p", "480p", "240p"]
     videos_modifications = [
         "no_modification",
         "blur",
@@ -39,7 +38,9 @@ def degraded_videos(video_path, output_folder_path, output_fps):
             # Take in account the video's fps and total frames are not accurate, it's an estimation (See OpenCV documentation)
             input_fps = video.get(cv2.CAP_PROP_FPS)
             output_fps = input_fps if output_fps == 0 else output_fps
-            total_frames_to_process = video.get(cv2.CAP_PROP_FRAME_COUNT) / (input_fps / output_fps)
+            total_frames_to_process = video.get(cv2.CAP_PROP_FRAME_COUNT) / (
+                input_fps / output_fps
+            )
             with tqdm(total=total_frames_to_process, desc="Video processing") as pbar:
                 # Read the video frame by frame (at a given fps)
                 frame_counter = 0
