@@ -1,4 +1,4 @@
-from degraded_videos import degraded_videos
+from utils.degraded_videos import degraded_videos
 import argparse
 
 
@@ -24,7 +24,7 @@ def main():
     parser.add_argument(
         "--output_folder_path",
         type=str,
-        default="data/output/",
+        default="data/output/video_degraded/",
         help="Path to the output directory for the degraded videos",
     )
     parser.add_argument(
@@ -42,4 +42,4 @@ if __name__ == "__main__":
     main()
 
 # e.g.
-# python .\genVideo.py --video_path "data/input/cam-philippines-5min.mp4" --output_folder_path "data/output/" --output_fps 1
+# python .\genVideo.py --video_path "data/input/cam-philippines-5min.mp4" --output_folder_path "data/output/video_degraded/" --output_fps 1
