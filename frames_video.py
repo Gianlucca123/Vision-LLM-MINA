@@ -2,7 +2,7 @@
 /**
  * @file python frames_video.py path_video times_in_format_MM:SS
  * Ex: python frames_video.py cam-philippines-5min.mp4 00:23 00:55 01:01 01:23 02:34 02:55 03:15 03:44 04:02 04:45
- * @brief Python script to get the frames of a video at the especific time given.
+ * @brief Python script to get the frames of a video at the especific time given and create a txt file with the same name of the frame.
  */
 """
 
