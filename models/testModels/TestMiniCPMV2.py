@@ -4,7 +4,7 @@ from transformers import AutoModel, AutoTokenizer
 from huggingface_hub import login
 
 # Replace 'your_huggingface_token' with your access token
-login('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')
+login('')
 
 model_id = "openbmb/MiniCPM-V-2"
 trust_remote_code = True
