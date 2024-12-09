@@ -2,9 +2,14 @@ import torch
 from PIL import Image
 from transformers import AutoModel, AutoTokenizer
 from huggingface_hub import login
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+token = os.getenv('HUGGINGFACE_HUB_TOKEN')
 
 # Replace 'your_huggingface_token' with your access token
-login('')
+login(token)
 
 model_id = "openbmb/MiniCPM-V-2"
 trust_remote_code = True
