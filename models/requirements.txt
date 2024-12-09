@@ -1,0 +1,10 @@
+# Common Dependencies
+transformers
+pillow
+torch
+
+# Qwen2 Dependencies
+qwen_vl_utils
+
+# InternVL2 Dependencies
+protobuf
