@@ -8,7 +8,7 @@ import os
 load_dotenv()
 token = os.getenv('HUGGINGFACE_HUB_TOKEN')
 
-# Replace 'your_huggingface_token' with your access token
+# Replace 'token' with your access token
 login(token)
 
 model_id = "openbmb/MiniCPM-V-2"
