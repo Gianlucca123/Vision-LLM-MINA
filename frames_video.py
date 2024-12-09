@@ -12,12 +12,10 @@ import cv2
 
 def list_of_times_seconds(list_times, time_seconds):
     """
-    /**
      * @brief Converts a list of time strings (MM:SS) to total seconds.
      * 
      * @param list_times List of time strings in MM:SS format.
      * @param time_seconds List to store the resulting time values in seconds.
-     */
     """
     for time in list_times:
         minutes, seconds = map(int, time.split(":"))
@@ -26,7 +24,6 @@ def list_of_times_seconds(list_times, time_seconds):
 
 def getFrame(sec, video, i, time_min):
     """
-    /**
      * @brief Captures a video frame at a specified time and saves it as a PNG file. Create a txt file with the same name of the frame.
      * 
      * @param sec The time in seconds where the frame should be captured.
@@ -34,7 +31,6 @@ def getFrame(sec, video, i, time_min):
      * @param i The frame index for naming the output file.
      * @param time_min The original time string (MM:SS) for naming the output file.
      * @return True if the frame was successfully captured, False otherwise.
-     */
     """
     video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
     hasFrames, image = video.read()
