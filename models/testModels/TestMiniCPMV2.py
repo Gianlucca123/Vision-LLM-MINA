@@ -27,7 +27,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=trust_remo
 model.eval()
 
 image = Image.open('Img1.jpg').convert('RGB')
-question = 'What is in the image?'
+question = "Describe this image."
 msgs = [{'role': 'user', 'content': question}]
 
 res, context, _ = model.chat(

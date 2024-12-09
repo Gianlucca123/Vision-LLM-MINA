@@ -92,7 +92,7 @@ pixel_values = load_image('Img1.jpg', max_num=12).to(torch.bfloat16).cuda()
 generation_config = dict(max_new_tokens=1024, do_sample=True)
 
 # single-image multi-round conversation 
-question = 'Please describe the image shortly.'
+question = "Describe this image."
 response = model.chat(tokenizer, pixel_values, question, generation_config)
 print(f'User: {question}\nAssistant: {response}'+'\n\n')
 

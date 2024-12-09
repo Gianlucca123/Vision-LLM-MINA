@@ -21,7 +21,7 @@ generation_config = dict(max_new_tokens=1024, do_sample=True)
 
 # Example for single image
 image_file = 'Img1.jpg'
-question = '<image>\nPlease describe the image in detail.'
+question = "Describe this image."
 response, history = model.chat(tokenizer, image_file, question, generation_config, history=None, return_history=True)
 print(f'User: {question}\nAssistant: {response}')
 
