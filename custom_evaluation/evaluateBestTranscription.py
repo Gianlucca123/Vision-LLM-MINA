@@ -46,6 +46,11 @@ def main():
         required=True,
         help="Evaluation mode to use: 'ST' for Sentence Transformer or 'JKW' for Jaccard Keyword.",
     )
+    parser.add_argument(
+        "--text_file",
+        action="store_true",
+        help="Flag to indicate that the input files are text files. Default is JSON.",
+    )
 
     args = parser.parse_args()
 
@@ -54,10 +59,13 @@ def main():
             args.ground_truth_path,
             args.candidates_path_folder,
             model_name=args.ST_model_name,
+            json_file=not args.text_file,
         )
     elif args.evaluation_mode == "JKW":
         similarities = compute_similarity_JKW(
-            args.ground_truth_path, args.candidates_path_folder
+            args.ground_truth_path,
+            args.candidates_path_folder,
+            json_file=not args.text_file,
         )
 
     display_scores(similarities)

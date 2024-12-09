@@ -44,11 +44,11 @@ There are two ways of comparing models transcriptions with the ground truth:
 
 To evaluate using the Jaccard keywords similarity run:
 
-    python .\evaluateBestTranscription.py --ground_truth_path "data/input/ground_truth/flying_whales.txt" --candidates_path_folder "data/output/transcription" --write_results --output_path "data/output/benchmark/output_JKW.txt" --evaluation_mode "JKW"
+    python .\evaluateBestTranscription.py --ground_truth_path "data/input/ground_truth/flying_whales.txt" --candidates_path_folder "data/output/transcription" --write_results --output_path "data/output/benchmark/output_JKW.txt" --evaluation_mode "JKW" --text_file
 
 To evaluate using the sentence transformer, run:
 
-    python .\evaluateBestTranscription.py --ground_truth_path "data/input/ground_truth/flying_whales.txt" --candidates_path_folder "data/output/transcription" --write_results --output_path "data/output/benchmark/output_ST.txt" --evaluation_mode "ST"
+    python .\evaluateBestTranscription.py --ground_truth_path "data/input/ground_truth/flying_whales.txt" --candidates_path_folder "data/output/transcription" --write_results --output_path "data/output/benchmark/output_ST.txt" --evaluation_mode "ST" --text_file
 
 
 ### evaluateBestTranscription arguments
@@ -83,3 +83,8 @@ To evaluate using the sentence transformer, run:
     - **required**: True
     - **help**: Evaluation mode to use: 'ST' for Sentence Transformer or 'JKW' for Jaccard Keyword.
     - **Explanation**: This argument specifies the evaluation mode to use. It can be either "ST" for Sentence Transformer or "JKW" for Jaccard Keyword. It is required for the script to run.
+
+- `--text_file`
+    - **action**: "store_true"
+    - **help**: Flag to indicate that the input files are text files. Default is JSON.
+    - **Explanation**: This argument is a flag that, when set, indicates that the input files are text files instead of JSON files. It does not take any value and is used as a boolean flag.
