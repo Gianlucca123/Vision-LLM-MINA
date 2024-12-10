@@ -1,5 +1,7 @@
 from frames_video import frame_video
 from genVideo import gen_video
+from utils.videos_modifications import question
+from models.callModels.RunAll import questionALLwrite
 
 import argparse
 import os
@@ -40,7 +42,7 @@ def main():
 
     frame_video(output_folder_name, args.time)
 
-
+    questionALLwrite(output_folder_name, question, args.time)
     
 
 

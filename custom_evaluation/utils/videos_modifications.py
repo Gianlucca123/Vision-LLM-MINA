@@ -4,3 +4,5 @@ videos_quality = ["1080p", "720p"]
 videos_modifications = [
     "no_modification"
 ]
+
+question = "Describe this image."
