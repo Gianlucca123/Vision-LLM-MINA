@@ -26,7 +26,7 @@ def degraded_videos(video_path, output_folder_path, output_fps):
         for modification in videos_modifications:
             codec_defined = False
             # Define and display the output path
-            output_path = output_folder_path + "/" + f"{quality}_{modification}.mp4"
+            output_path = os.path.join(output_folder_path, f"{quality}_{modification}.mp4")
             print(output_path)
             # Open the video
             video = cv2.VideoCapture(video_path)
