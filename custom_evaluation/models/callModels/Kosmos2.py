@@ -13,7 +13,7 @@ def questionKosmos2(image_path,question):
 
     image = Image.open(image_path)
 
-    inputs = processor(text=question, images=image, return_tensors="pt")
+    inputs = processor(text=question, images=image, return_tensors="pt").to(device)
 
     generated_ids = model.generate(
         pixel_values=inputs["pixel_values"],
