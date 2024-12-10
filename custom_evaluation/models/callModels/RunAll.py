@@ -1,9 +1,9 @@
-from InternVL2_1B import questionInternVL2_1B
-from Kosmos2 import questionKosmos2
-from MiniCPMV2 import questionMiniCPMV2
-from Mississippi import questionMississippi
-from Moondream2 import questionMoondream2
-from Qwen2_VL_2B_Instruct import questionQwen2VL2B
+from .InternVL2_1B import questionInternVL2_1B
+from .Kosmos2 import questionKosmos2
+from .MiniCPMV2 import questionMiniCPMV2
+from .Mississippi import questionMississippi
+from .Moondream2 import questionMoondream2
+from .Qwen2_VL_2B_Instruct import questionQwen2VL2B
 from ...utils.videos_modifications import videos_quality, videos_modifications
 import json
 
