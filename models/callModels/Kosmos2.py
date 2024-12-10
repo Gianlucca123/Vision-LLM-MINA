@@ -1,9 +1,14 @@
 import requests
+import torch
 from PIL import Image
 from transformers import AutoProcessor, AutoModelForVision2Seq
 
 def questionKosmos2(image_path,question):
-    model = AutoModelForVision2Seq.from_pretrained("microsoft/kosmos-2-patch14-224")
+    # Check if GPU is available
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # Load the model and processor
+    model = AutoModelForVision2Seq.from_pretrained("microsoft/kosmos-2-patch14-224").to(device)
     processor = AutoProcessor.from_pretrained("microsoft/kosmos-2-patch14-224")
 
     image = Image.open(image_path)

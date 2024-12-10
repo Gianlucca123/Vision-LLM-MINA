@@ -8,6 +8,9 @@ This guide explains how to replace the `modeling_minicpm.py` file in the `.cache
 ## Problem Description
 The issue arises in the `prepare_inputs_for_generation` function at line 1489 of the `modeling_minicpm.py` file located in the `.cache` directory. Specifically, the problem occurs when `inputs_embeds` is not `None` and `past_key_values` is empty but not `None`. This leads to an `IndexError` when calculating the rotary embedding.
 
+See `https://huggingface.co/openbmb/MiniCPM-V-2/discussions/23` for more details.
+
+## Chose on of the following fixes
 ### Fix 1
 Replace `modeling_minicpm.py` located in : **.cache/huggingface/modules/transformers_modules/openbmb/MiniCPM-V-2/.../modeling_minicpm.py**
 With the attached `modeling_minicpm.py` file.
