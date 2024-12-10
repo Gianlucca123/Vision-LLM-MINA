@@ -1,5 +1,6 @@
 from sentence_transformers import SentenceTransformer, util
 from pathlib import Path
+import json
 
 
 def load_model(model_name: str = "all-MiniLM-L6-v2"):
@@ -54,7 +55,10 @@ def get_document_embedding(model, text, max_length=100):
 
 
 def compute_similarity_ST(
-    ground_truth_path, candidates_path_folder, model_name="all-MiniLM-L6-v2"
+    ground_truth_path,
+    candidates_path_folder,
+    model_name="all-MiniLM-L6-v2",
+    json_file=True,
 ):
     """
     Compute the similarity (cosine similarity) between a ground truth document and multiple candidate documents using a specified sentence transformer model.
@@ -64,6 +68,8 @@ def compute_similarity_ST(
     @type candidates_path_folder: str
     @param model_name: Name of the sentence transformer model to use. Default is 'all-MiniLM-L6-v2'.
     @type model_name: str
+    @param json_file: Whether the input files are in JSON format. Default is True.
+    @type json_file: bool
     @return: A dictionary where keys are candidate document names (without extension) and values are their similarity scores to the ground truth document.
     @rtype: dict
     """
@@ -71,24 +77,52 @@ def compute_similarity_ST(
     # Load the sentence transformer model
     model = load_model(model_name)
 
-    # Load the ground truth document
-    ground_truth_path = Path(ground_truth_path)
-    ground_truth = ground_truth_path.read_text(encoding="utf-8")
+    if not json_file:
+        # Load the ground truth document
+        ground_truth_path = Path(ground_truth_path)
+        ground_truth = ground_truth_path.read_text(encoding="utf-8")
 
-    # Compute the embedding for the ground truth document
-    gt_embedding = get_document_embedding(model, ground_truth)
+        # Compute the embedding for the ground truth document
+        gt_embedding = get_document_embedding(model, ground_truth)
 
-    # Compute the similarity between the ground truth document and each candidate document
-    similarities = {}
-    candidates_folder_path = Path(candidates_path_folder)
-    candidates_paths = list(candidates_folder_path.glob("*.txt"))
+        # Compute the similarity between the ground truth document and each candidate document
+        similarities = {}
+        candidates_folder_path = Path(candidates_path_folder)
+        candidates_paths = list(candidates_folder_path.glob("*.txt"))
 
-    for candidate_path in candidates_paths:
-        candidate = candidate_path.read_text(encoding="utf-8")
-        candidate_embedding = get_document_embedding(model, candidate)
-        similarity = util.cos_sim(
-            gt_embedding, candidate_embedding
-        ).item()  # Cosine similarity
-        similarities[candidate_path.stem] = similarity
+        for candidate_path in candidates_paths:
+            candidate = candidate_path.read_text(encoding="utf-8")
+            candidate_embedding = get_document_embedding(model, candidate)
+            similarity = util.cos_sim(
+                gt_embedding, candidate_embedding
+            ).item()  # Cosine similarity
+            similarities[candidate_path.stem] = similarity
+        
+    else:
+        # Open the ground truth json file
+        with open(ground_truth_path) as f:
+            ground_truth = json.load(f)
+
+        similarities = {}
+
+        for candidate_path in Path(candidates_path_folder).glob("*.json"):
+            # Open the candidate json file
+            with open(candidate_path) as f:
+                candidates = json.load(f)
+
+            counter = 0
+            current_similarity = 0
+
+            for frame, candidate in zip(ground_truth, candidates):
+                if frame["frame_id"] == candidate["frame_id"]:
+                    candidate_embedding = get_document_embedding(model, candidate['text'])
+                    gt_embedding = get_document_embedding(model, frame['text'])
+                    similarity = util.cos_sim(
+                        gt_embedding, candidate_embedding
+                    ).item()
+                    current_similarity += similarity
+                    counter += 1
+            
+            similarities[candidate_path.stem] = current_similarity / counter
 
     return similarities
