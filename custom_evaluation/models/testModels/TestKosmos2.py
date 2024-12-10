@@ -1,18 +1,27 @@
 import requests
-
+import torch
 from PIL import Image
 from transformers import AutoProcessor, AutoModelForVision2Seq
 
+# Check if GPU is available
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-model = AutoModelForVision2Seq.from_pretrained("microsoft/kosmos-2-patch14-224")
+# Load the model and processor
+model = AutoModelForVision2Seq.from_pretrained("microsoft/kosmos-2-patch14-224").to(device)
 processor = AutoProcessor.from_pretrained("microsoft/kosmos-2-patch14-224")
 
 prompt = "Describe this image."
 
+# Load the image
 image = Image.open("Img1.jpg")
 
+# Process the inputs
 inputs = processor(text=prompt, images=image, return_tensors="pt")
 
+# Move the inputs to the GPU
+inputs = {key: value.to(device) for key, value in inputs.items()}
+
+# Generate the output
 generated_ids = model.generate(
     pixel_values=inputs["pixel_values"],
     input_ids=inputs["input_ids"],
@@ -22,15 +31,14 @@ generated_ids = model.generate(
     use_cache=True,
     max_new_tokens=128,
 )
+
+# Decode the generated text
 generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
 # Specify `cleanup_and_extract=False` in order to see the raw model generation.
 processed_text = processor.post_process_generation(generated_text, cleanup_and_extract=False)
 
-#print(processed_text)
-# `<grounding> An image of<phrase> a snowman</phrase><object><patch_index_0044><patch_index_0863></object> warming himself by<phrase> a fire</phrase><object><patch_index_0005><patch_index_0911></object>.`
-
-# By default, the generated  text is cleanup and the entities are extracted.
+# By default, the generated text is cleaned up and the entities are extracted.
 processed_text, entities = processor.post_process_generation(generated_text)
 
 print(processed_text)

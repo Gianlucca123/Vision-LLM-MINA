@@ -6,7 +6,7 @@ def questionMoondream2(image_path,question):
     revision = "2024-08-26"
     model = AutoModelForCausalLM.from_pretrained(
         model_id, trust_remote_code=True, revision=revision
-    )
+    ).eval().cuda()
     tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
 
     image = Image.open(image_path)
