@@ -3,15 +3,19 @@ import torch
 from PIL import Image
 from transformers import AutoProcessor, AutoModelForVision2Seq
 
-def questionKosmos2(image_path,question):
+def open_Kosmos2():
     # Check if GPU is available
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Load the model and processor
     model = AutoModelForVision2Seq.from_pretrained("microsoft/kosmos-2-patch14-224").to(device)
     processor = AutoProcessor.from_pretrained("microsoft/kosmos-2-patch14-224")
+    return model, processor, device
 
-    image = Image.open(image_path)
+
+def questionKosmos2(question, model, processor, device, image):
+    
+    #image = Image.open(image_path)
 
     inputs = processor(text=question, images=image, return_tensors="pt").to(device)
 

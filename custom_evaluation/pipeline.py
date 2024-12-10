@@ -4,8 +4,6 @@ from utils.videos_modifications import question
 from models.callModels.RunAll import questionALLwrite
 
 import argparse
-import os
-import cv2
 
 def main():
     parser = argparse.ArgumentParser(
