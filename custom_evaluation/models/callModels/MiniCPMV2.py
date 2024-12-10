@@ -5,7 +5,7 @@ from huggingface_hub import login
 from dotenv import load_dotenv
 import os
 
-def questionMiniCPMV2(image_path,question):
+def open_MiniCPMV2():
     load_dotenv()
     token = os.getenv('HUGGINGFACE_HUB_TOKEN')
 
@@ -22,8 +22,10 @@ def questionMiniCPMV2(image_path,question):
 
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=trust_remote_code)
     model.eval()
+    return model, tokenizer
 
-    image = Image.open(image_path).convert('RGB')
+def questionMiniCPMV2(question, model, tokenizer, image):
+    #image = Image.open(image_path).convert('RGB')
     msgs = [{'role': 'user', 'content': question}]
 
     res, context, _ = model.chat(
