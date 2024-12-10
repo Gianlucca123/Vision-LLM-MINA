@@ -15,3 +15,5 @@ timm
 # Mississippi
 peft
 
+# MiniCPM
+python-dotenv
