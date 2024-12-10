@@ -4,7 +4,7 @@ from qwen_vl_utils import process_vision_info
 # default: Load the model on the available device(s)
 model = Qwen2VLForConditionalGeneration.from_pretrained(
     "Qwen/Qwen2-VL-2B-Instruct", torch_dtype="auto", device_map="auto"
-)
+).to("cuda")
 
 # We recommend enabling flash_attention_2 for better acceleration and memory saving, especially in multi-image and video scenarios.
 # model = Qwen2VLForConditionalGeneration.from_pretrained(

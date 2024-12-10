@@ -16,7 +16,7 @@ prompt = "Describe this image."
 image = Image.open("Img1.jpg")
 
 # Process the inputs
-inputs = processor(text=prompt, images=image, return_tensors="pt")
+inputs = processor(text=prompt, images=image, return_tensors="pt").to(device)
 
 # Move the inputs to the GPU
 inputs = {key: value.to(device) for key, value in inputs.items()}

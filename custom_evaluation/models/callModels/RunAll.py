@@ -1,10 +1,10 @@
-from InternVL2_1B import questionInternVL2_1B
-from Kosmos2 import questionKosmos2
-from MiniCPMV2 import questionMiniCPMV2
-from Mississippi import questionMississippi
-from Moondream2 import questionMoondream2
-from Qwen2_VL_2B_Instruct import questionQwen2VL2B
-from ...utils.videos_modifications import videos_quality, videos_modifications
+from models.callModels.InternVL2_1B import questionInternVL2_1B
+from models.callModels.Kosmos2 import questionKosmos2
+from models.callModels.MiniCPMV2 import questionMiniCPMV2
+from models.callModels.Mississippi import questionMississippi
+from models.callModels.Moondream2 import questionMoondream2
+from models.callModels.Qwen2_VL_2B_Instruct import questionQwen2VL2B
+from utils.videos_modifications import videos_quality, videos_modifications
 import json
 
 def questionALLwrite(image_path, question, times):
@@ -18,14 +18,20 @@ def questionALLwrite(image_path, question, times):
     for quality in videos_quality:
         for modification in videos_modifications:
             for i, time in enumerate(times):
-                path = f"../../frames/{quality}_{modification}/frame{i+1}_{time}.png"
+                path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
 
                 list_Moondream2.append(dict(frame_id = i+1, text = questionMoondream2(path, question)))
+                print("== Moondream2 SUCCESS ==")
                 list_InternVL2_1B.append(dict(frame_id = i+1, text = questionInternVL2_1B(path, question)))
+                print("== InternVL2 SUCCESS ==")
                 list_Kosmos2.append(dict(frame_id = i+1, text = questionKosmos2(path, question)))
+                print("== Kosmos2 SUCCESS ==")
                 list_MiniCPMV2.append(dict(frame_id = i+1, text = questionMiniCPMV2(path, question)))
+                print("== MiniCPMV2 SUCCESS ==")
                 list_Mississipi.append(dict(frame_id = i+1, text = questionMississippi(path, question)))
+                print("== Mississippi SUCCESS ==")
                 list_Qwen2VL2B.append(dict(frame_id = i+1, text = questionQwen2VL2B(path, question)))
+                print("== Qwen2VL SUCCESS ==")
 
     with open("Moondream2.json", "w") as outfile:
         json.dump(list_Moondream2, outfile)

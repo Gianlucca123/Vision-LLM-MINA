@@ -5,7 +5,7 @@ def questionQwen2VL2B(image_path,question):
     # default: Load the model on the available device(s)
     model = Qwen2VLForConditionalGeneration.from_pretrained(
         "Qwen/Qwen2-VL-2B-Instruct", torch_dtype="auto", device_map="auto"
-    )
+    ).to("cuda")
 
     # default processer
     processor = AutoProcessor.from_pretrained("Qwen/Qwen2-VL-2B-Instruct")
