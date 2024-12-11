@@ -1,8 +1,9 @@
 from models.callModels.InternVL2_1B import questionInternVL2_1B, open_InternVL2_1B
 from models.callModels.Kosmos2 import questionKosmos2, open_Kosmos2
 from models.callModels.MiniCPMV2 import questionMiniCPMV2, open_MiniCPMV2
-from models.callModels.Mississippi import questionMississippi, open_Mississipi
+from models.callModels.Mississippi import questionMississippi, open_Mississippi
 from models.callModels.Moondream2 import questionMoondream2, open_Moondream2
+from models.callModels.Qwen2VL_2B import questionQwen2VL_2B, open_Qwen2VL_2B
 from utils.videos_modifications import videos_quality, videos_modifications
 import json
 from PIL import Image
@@ -119,20 +120,35 @@ def main():
             outfile.close()
             print("== MiniCPMV2 SUCCESS ==")
 
-        case "Mississipi":
-            list_Mississipi = []
-            model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi = open_Mississipi()
+        case "Mississippi":
+            list_Mississippi = []
+            model_Mississippi, tokenizer_Mississippi, generation_config_Mississippi = open_Mississippi()
             for quality in videos_quality:
                 for modification in videos_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
-                        list_Mississipi.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMississippi(path, args.question, model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi)))
+                        list_Mississippi.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMississippi(path, args.question, model_Mississippi, tokenizer_Mississippi, generation_config_Mississippi)))
 
             torch.cuda.empty_cache()   
-            with open(os.path.join(args.result_output,"Mississipi.json"), "w") as outfile:
-                json.dump(list_Mississipi, outfile)
+            with open(os.path.join(args.result_output,"Mississippi.json"), "w") as outfile:
+                json.dump(list_Mississippi, outfile)
             outfile.close()
             print("== Mississippi SUCCESS ==")
+        
+        case "Qwen2VL_2B":
+            list_Qwen2VL_2B = []
+            model_Qwen2VL_2B, processor_Qwen2VL_2B = open_Qwen2VL_2B()
+            for quality in videos_quality:
+                for modification in videos_modifications:
+                    for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
+                        path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
+                        list_Qwen2VL_2B.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionQwen2VL_2B(path, args.question, model_Qwen2VL_2B, processor_Qwen2VL_2B)))
+
+            torch.cuda.empty_cache()   
+            with open(os.path.join(args.result_output,"Qwen2VL_2B.json"), "w") as outfile:
+                json.dump(list_Qwen2VL_2B, outfile)
+            outfile.close()
+            print("== Qwen2VL_2B SUCCESS ==")
 
         case _:
             print(f"Model {args.model} does not exit.")
