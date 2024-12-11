@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoModel, AutoTokenizer
 
-def open_Mississipi():
+def open_Mississippi():
     model_path = 'h2oai/h2ovl-mississippi-2b'
     model = AutoModel.from_pretrained(
         model_path,
