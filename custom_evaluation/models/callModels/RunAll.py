@@ -7,82 +7,136 @@ from utils.videos_modifications import videos_quality, videos_modifications
 import json
 from PIL import Image
 import torch
+import argparse
+import os
 
-def questionALLwrite(image_path, question, times):
-    list_Moondream2 = []
-    list_InternVL2_1B = []
-    list_Kosmos2 = []
-    list_MiniCPMV2 = []
-    list_Mississipi = []
-    
+def main():
 
-    model_Moondream2, tokenizer_Moondrem2 = open_Moondream2()
-    for quality in videos_quality:
-        for modification in videos_modifications:
-            for i, time in enumerate(times):
-                path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
-                image = Image.open(path)
-                list_Moondream2.append(dict(video = f"{quality}_{modification}",frame_id = i+1, text = questionMoondream2(question, model_Moondream2, tokenizer_Moondrem2, image)))
-                
-    torch.cuda.empty_cache()
-    with open("Moondream2.json", "w") as outfile:
-        json.dump(list_Moondream2, outfile)
-    outfile.close()
-    print("== Moondream2 SUCCESS ==")
+    times = ["01:23"]
+    
+    parser = argparse.ArgumentParser(
+        description="Generate a Json file with the result of the model specified"
+    )
 
-    model_InternVL2, tokenizer_InternVL2 = open_InternVL2_1B()
-    for quality in videos_quality:
-        for modification in videos_modifications:
-            for i, time in enumerate(times):
-                path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
-                image_rgb = Image.open(path).convert('RGB')
-                list_InternVL2_1B.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionInternVL2_1B(question, model_InternVL2, tokenizer_InternVL2, image_rgb)))
-    
-    torch.cuda.empty_cache()
-    with open("InternVL2_1B.json", "w") as outfile:
-        json.dump(list_InternVL2_1B, outfile)
-    outfile.close()
-    print("== InternVL2 SUCCESS ==")
-    
-    model_Kosmos2, processor_Komos2, device_Kosmos2 = open_Kosmos2()
-    for quality in videos_quality:
-        for modification in videos_modifications:
-            for i, time in enumerate(times):
-                path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
-                image = Image.open(path)
-                list_Kosmos2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionKosmos2(question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)))
-                
-    
-    with open("Kosmos2.json", "w") as outfile:
-        json.dump(list_Kosmos2, outfile)
-    outfile.close()
-    print("== Kosmos2 SUCCESS ==")
-    
-    model_MiniCPMV2, tokenizer_MiniCPMV2 = open_MiniCPMV2()
-    for quality in videos_quality:
-        for modification in videos_modifications:
-            for i, time in enumerate(times):
-                path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
-                image_rgb = Image.open(path).convert('RGB')
-                list_MiniCPMV2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMiniCPMV2(question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)))
+    parser.add_argument(
+        "--model",
+        type=str,
+        default="Moondrem2",
+        help="Model that the script is going to use.",
+    )
 
-    torch.cuda.empty_cache()           
-    with open("MiniCPMV2.json", "w") as outfile:
-        json.dump(list_MiniCPMV2, outfile)
-    outfile.close()
-    print("== MiniCPMV2 SUCCESS ==")
-    
-    model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi = open_Mississipi()
-    for quality in videos_quality:
-        for modification in videos_modifications:
-            for i, time in enumerate(times):
-                path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
-                list_Mississipi.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMississippi(path, question, model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi)))
+    parser.add_argument(
+        "--question",
+        type=str,
+        default="Describe this image.",
+        help="Question to the model.",
+    )
 
-    torch.cuda.empty_cache()   
-    with open("Mississipi.json", "w") as outfile:
-        json.dump(list_Mississipi, outfile)
-    outfile.close()
-    print("== Mississippi SUCCESS ==")
+    parser.add_argument(
+        "--input_frames",
+        type=str,
+        default="frames",
+        help="Path to the frames.",
+    )
 
-    print("Les réponses ont été écrites dans les fichiers json")
+    parser.add_argument(
+        "--result_output",
+        type=str,
+        default="results",
+        help="Name of the directory where the results are going to be stored.",
+    )
+
+
+    args = parser.parse_args()
+
+    # Create a directory called "frames" if it does not already exist
+    try:
+        os.mkdir(args.result_path)
+        print(f"Directory '{args.result_path}' created successfully.")
+    except FileExistsError:
+        print(f"Directory '{args.result_path}' already exists.")
+
+
+    match args.model:
+        case "Moondrem2":
+            list_Moondream2 = []
+            model_Moondream2, tokenizer_Moondrem2 = open_Moondream2()
+            for quality in videos_quality:
+                for modification in videos_modifications:
+                    for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
+                        path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
+                        image = Image.open(path)
+                        list_Moondream2.append(dict(video = f"{quality}_{modification}",frame_id = i+1, text = questionMoondream2(args.question, model_Moondream2, tokenizer_Moondrem2, image)))
+                        
+            torch.cuda.empty_cache()
+            with open(os.path.join(args.result_path,"Moondream2.json"), "w") as outfile:
+                json.dump(list_Moondream2, outfile)
+            outfile.close()
+            print("== Moondream2 SUCCESS ==")
+
+        case "InternVL2_1B":
+            list_InternVL2_1B = []
+            model_InternVL2, tokenizer_InternVL2 = open_InternVL2_1B()
+            for quality in videos_quality:
+                for modification in videos_modifications:
+                    for i, time in enumerate(times):
+                        path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
+                        image_rgb = Image.open(path).convert('RGB')
+                        list_InternVL2_1B.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionInternVL2_1B(args.question, model_InternVL2, tokenizer_InternVL2, image_rgb)))
+            
+            torch.cuda.empty_cache()
+            with open(os.path.join(args.result_path,"InternVL2_1B.json"), "w") as outfile:
+                json.dump(list_InternVL2_1B, outfile)
+            outfile.close()
+            print("== InternVL2_1B SUCCESS ==")
+
+        case "Kosmos2":
+            list_Kosmos2 = []
+            model_Kosmos2, processor_Komos2, device_Kosmos2 = open_Kosmos2()
+            for quality in videos_quality:
+                for modification in videos_modifications:
+                    for i, time in enumerate(times):
+                        path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
+                        image = Image.open(path)
+                        list_Kosmos2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionKosmos2(args.question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)))
+                        
+            
+            with open(os.path.join(args.result_path,"Kosmos2.json"), "w") as outfile:
+                json.dump(list_Kosmos2, outfile)
+            outfile.close()
+            print("== Kosmos2 SUCCESS ==")
+
+        case "MiniCPMV2":
+            list_MiniCPMV2 = []
+            model_MiniCPMV2, tokenizer_MiniCPMV2 = open_MiniCPMV2()
+            for quality in videos_quality:
+                for modification in videos_modifications:
+                    for i, time in enumerate(times):
+                        path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
+                        image_rgb = Image.open(path).convert('RGB')
+                        list_MiniCPMV2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMiniCPMV2(args.question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)))
+
+            torch.cuda.empty_cache()           
+            with open(os.path.join(args.result_path,"MiniCPMV2.json"), "w") as outfile:
+                json.dump(list_MiniCPMV2, outfile)
+            outfile.close()
+            print("== MiniCPMV2 SUCCESS ==")
+
+        case "Mississipi":
+            list_Mississipi = []
+            model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi = open_Mississipi()
+            for quality in videos_quality:
+                for modification in videos_modifications:
+                    for i, time in enumerate(times):
+                        path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
+                        list_Mississipi.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMississippi(path, args.question, model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi)))
+
+            torch.cuda.empty_cache()   
+            with open(os.path.join(args.result_path,"Mississipi.json"), "w") as outfile:
+                json.dump(list_Mississipi, outfile)
+            outfile.close()
+            print("== Mississippi SUCCESS ==")
+
+
+if __name__ == "__main__":
+    main()

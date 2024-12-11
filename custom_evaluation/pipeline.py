@@ -1,7 +1,6 @@
 from frames_video import frame_video
 from genVideo import gen_video
-from utils.videos_modifications import question
-from models.callModels.RunAll import questionALLwrite
+from utils.videos_modifications import output_folder_name
 
 import argparse
 
@@ -34,15 +33,9 @@ def main():
 
     args = parser.parse_args()
 
-    output_folder_name = "videos_degraded"
-
     gen_video(args.video_path, output_folder_name, args.output_fps)
 
     frame_video(output_folder_name, args.time)
-
-    questionALLwrite(output_folder_name, question, args.time)
-    
-
 
 if __name__ == "__main__":
     main()

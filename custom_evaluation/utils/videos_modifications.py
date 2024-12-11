@@ -5,4 +5,4 @@ videos_modifications = [
     "no_modification"
 ]
 
-question = "Describe this image."
+output_folder_name = "videos_degraded"
