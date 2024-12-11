@@ -51,10 +51,10 @@ def main():
 
     # Create a directory called "frames" if it does not already exist
     try:
-        os.mkdir(args.result_path)
-        print(f"Directory '{args.result_path}' created successfully.")
+        os.mkdir(args.result_output)
+        print(f"Directory '{args.result_output}' created successfully.")
     except FileExistsError:
-        print(f"Directory '{args.result_path}' already exists.")
+        print(f"Directory '{args.result_output}' already exists.")
 
 
     match args.model:
@@ -69,7 +69,7 @@ def main():
                         list_Moondream2.append(dict(video = f"{quality}_{modification}",frame_id = i+1, text = questionMoondream2(args.question, model_Moondream2, tokenizer_Moondrem2, image)))
                         
             torch.cuda.empty_cache()
-            with open(os.path.join(args.result_path,"Moondream2.json"), "w") as outfile:
+            with open(os.path.join(args.result_output,"Moondream2.json"), "w") as outfile:
                 json.dump(list_Moondream2, outfile)
             outfile.close()
             print("== Moondream2 SUCCESS ==")
@@ -85,7 +85,7 @@ def main():
                         list_InternVL2_1B.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionInternVL2_1B(args.question, model_InternVL2, tokenizer_InternVL2, image_rgb)))
             
             torch.cuda.empty_cache()
-            with open(os.path.join(args.result_path,"InternVL2_1B.json"), "w") as outfile:
+            with open(os.path.join(args.result_output,"InternVL2_1B.json"), "w") as outfile:
                 json.dump(list_InternVL2_1B, outfile)
             outfile.close()
             print("== InternVL2_1B SUCCESS ==")
@@ -101,7 +101,7 @@ def main():
                         list_Kosmos2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionKosmos2(args.question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)))
                         
             
-            with open(os.path.join(args.result_path,"Kosmos2.json"), "w") as outfile:
+            with open(os.path.join(args.result_output,"Kosmos2.json"), "w") as outfile:
                 json.dump(list_Kosmos2, outfile)
             outfile.close()
             print("== Kosmos2 SUCCESS ==")
@@ -117,7 +117,7 @@ def main():
                         list_MiniCPMV2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMiniCPMV2(args.question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)))
 
             torch.cuda.empty_cache()           
-            with open(os.path.join(args.result_path,"MiniCPMV2.json"), "w") as outfile:
+            with open(os.path.join(args.result_output,"MiniCPMV2.json"), "w") as outfile:
                 json.dump(list_MiniCPMV2, outfile)
             outfile.close()
             print("== MiniCPMV2 SUCCESS ==")
@@ -132,7 +132,7 @@ def main():
                         list_Mississipi.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMississippi(path, args.question, model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi)))
 
             torch.cuda.empty_cache()   
-            with open(os.path.join(args.result_path,"Mississipi.json"), "w") as outfile:
+            with open(os.path.join(args.result_output,"Mississipi.json"), "w") as outfile:
                 json.dump(list_Mississipi, outfile)
             outfile.close()
             print("== Mississippi SUCCESS ==")
