@@ -34,10 +34,10 @@ def main():
         help="Flag to write the results to a file.",
     )
     parser.add_argument(
-        "--output_path",
+        "--output",
         type=str,
-        default="data/output/benchmark/output.txt",
-        help="Path to the output file where results will be written.",
+        default="benchmark",
+        help="Name of the directory where the result is going to be stored.",
     )
     parser.add_argument(
         "--evaluation_mode",
@@ -71,7 +71,7 @@ def main():
     display_scores(similarities)
 
     if args.write_results:
-        write_results(similarities, args.output_path)
+        write_results(similarities, args.output)
 
 
 if __name__ == "__main__":

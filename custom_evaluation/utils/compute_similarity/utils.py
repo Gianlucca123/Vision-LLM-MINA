@@ -1,3 +1,5 @@
+import os
+
 def display_scores(similarities):
     """
     @brief Displays similarity scores for given candidates.
@@ -18,6 +20,15 @@ def write_results(similarities, output_path):
     @param similarities A dictionary where keys are candidate names (str) and values are similarity scores (float).
     @param output_path The path to the output file.
     """
-    with open(output_path, "w") as f:
+
+    # Create a directory called "frames" if it does not already exist
+    try:
+        os.mkdir(output_path)
+        print(f"Directory '{output_path}' created successfully.")
+    except FileExistsError:
+        print(f"Directory '{output_path}' already exists.")
+
+
+    with open(os.path.join(output_path, "output.txt"), "w") as f:
         for candidate, score in similarities.items():
             f.write(f"{candidate}: {score:.4f}\n")

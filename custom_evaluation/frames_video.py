@@ -80,7 +80,3 @@ def frame_video(video_path, time):
                     print(f"Frame {time[i]} from video '{quality}_{modification}' saved successfully.")
                 else:
                     print(f"Time {time[i]} does not exist in the video '{quality}_{modification}'.")
-
-
-""" if __name__ == "__main__":
-    main() """
