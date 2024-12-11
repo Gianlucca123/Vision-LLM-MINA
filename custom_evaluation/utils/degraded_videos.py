@@ -2,9 +2,8 @@ import cv2
 import numpy as np
 from tqdm import tqdm
 import os
-from utils.videos_modifications import videos_modifications, videos_quality
 
-def degraded_videos(video_path, output_folder_path, output_fps):
+def degraded_videos(video_path, output_folder_path, output_fps, video_quality, video_modification):
     """
     Processes a video by applying various modifications and saves the modified videos to the specified output folder.
     @param video_path: Path to the input video file.
@@ -22,8 +21,8 @@ def degraded_videos(video_path, output_folder_path, output_fps):
         print(f"Directory '{output_folder_path}' already exists.")
 
     # Run the model on the videos
-    for quality in videos_quality:
-        for modification in videos_modifications:
+    for quality in video_quality:
+        for modification in video_modification:
             codec_defined = False
             # Define and display the output path
             output_path = os.path.join(output_folder_path, f"{quality}_{modification}.mp4")

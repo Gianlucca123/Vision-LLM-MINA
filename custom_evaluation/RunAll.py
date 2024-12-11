@@ -3,7 +3,6 @@ from models.callModels.Kosmos2 import questionKosmos2, open_Kosmos2
 from models.callModels.MiniCPMV2 import questionMiniCPMV2, open_MiniCPMV2
 from models.callModels.Mississippi import questionMississippi, open_Mississipi
 from models.callModels.Moondream2 import questionMoondream2, open_Moondream2
-from utils.videos_modifications import videos_quality, videos_modifications
 import json
 from PIL import Image
 import torch
@@ -43,10 +42,32 @@ def main():
         help="Name of the directory where the results are going to be stored.",
     )
 
+    parser.add_argument(
+        "--video_quality",
+        nargs='+',
+        choices=["1080p", "720p", "480p", "240p"],
+        default=["1080p"],
+        help="Define quality of the videos"
+    )
+
+    parser.add_argument(
+        "--video_modifications",
+        nargs='+',
+        choices=[
+        "no_modification",
+        "blur",
+        "noise",
+        "black_and_white",
+        "distortion",
+        "different_color_space"
+        ],
+        default=["no_modification"],
+        help="modifications for the video"
+    )
 
     args = parser.parse_args()
 
-    # Create a directory called to store the results, if it does not already exist.
+    # Create a directory to store the results, if it does not already exist.
     try:
         os.mkdir(args.result_output)
         print(f"Directory '{args.result_output}' created successfully.")
@@ -58,8 +79,8 @@ def main():
         case "Moondrem2":
             list_Moondream2 = []
             model_Moondream2, tokenizer_Moondrem2 = open_Moondream2()
-            for quality in videos_quality:
-                for modification in videos_modifications:
+            for quality in args.video_quality:
+                for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image = Image.open(path)
@@ -74,8 +95,8 @@ def main():
         case "InternVL2_1B":
             list_InternVL2_1B = []
             model_InternVL2, tokenizer_InternVL2 = open_InternVL2_1B()
-            for quality in videos_quality:
-                for modification in videos_modifications:
+            for quality in args.video_quality:
+                for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
@@ -90,8 +111,8 @@ def main():
         case "Kosmos2":
             list_Kosmos2 = []
             model_Kosmos2, processor_Komos2, device_Kosmos2 = open_Kosmos2()
-            for quality in videos_quality:
-                for modification in videos_modifications:
+            for quality in args.video_quality:
+                for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image = Image.open(path)
@@ -106,8 +127,8 @@ def main():
         case "MiniCPMV2":
             list_MiniCPMV2 = []
             model_MiniCPMV2, tokenizer_MiniCPMV2 = open_MiniCPMV2()
-            for quality in videos_quality:
-                for modification in videos_modifications:
+            for quality in args.video_quality:
+                for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
@@ -122,8 +143,8 @@ def main():
         case "Mississipi":
             list_Mississipi = []
             model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi = open_Mississipi()
-            for quality in videos_quality:
-                for modification in videos_modifications:
+            for quality in args.video_quality:
+                for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         list_Mississipi.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMississippi(path, args.question, model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi)))

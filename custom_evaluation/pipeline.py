@@ -1,24 +1,25 @@
 from frames_video import frame_video
-from genVideo import gen_video
-from utils.videos_modifications import output_folder_name
-
+from utils.degraded_videos import degraded_videos
 import argparse
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate the degraded videos for the custom evaluation."
+        description="Generate the degraded videos and take the frames based on the time given"
     )
     parser.add_argument(
         "--video_path",
-        type=str,
         help="Path to the video file.",
     )
-    """ parser.add_argument(
-        "--output_folder_name",
-        type=str,
-        default="Videos_degraded",
+    parser.add_argument(
+        "--videos_output",
+        default="videos_degraded",
         help="Name of the output directory for the degraded videos",
-    ) """
+    )
+    parser.add_argument(
+        "--frames_output",
+        default="frames",
+        help="Name of the output directory for the frames",
+    )
     parser.add_argument(
         "--output_fps",
         type=int,
@@ -31,11 +32,34 @@ def main():
         help="List of time strings in format 'MM:SS'"
     )
 
+    parser.add_argument(
+        "--video_quality",
+        nargs='+',
+        choices=["1080p", "720p", "480p", "240p"],
+        default=["1080p"],
+        help="Define quality of the videos"
+    )
+
+    parser.add_argument(
+        "--video_modifications",
+        nargs='+',
+        choices=[
+        "no_modification",
+        "blur",
+        "noise",
+        "black_and_white",
+        "distortion",
+        "different_color_space"
+        ],
+        default=["no_modification"],
+        help="modifications for the video"
+    )
+
     args = parser.parse_args()
 
-    gen_video(args.video_path, output_folder_name, args.output_fps)
+    degraded_videos(args.video_path, args.videos_output, args.output_fps, args.video_quality, args.video_modifications)
 
-    frame_video(output_folder_name, args.time)
+    frame_video(args.videos_output, args.time, args.video_quality, args.video_modifications, args.frames_output)
 
 if __name__ == "__main__":
     main()

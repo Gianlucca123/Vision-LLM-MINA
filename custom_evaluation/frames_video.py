@@ -1,20 +1,15 @@
 """
-/**
  * @file python frames_video.py path_video times_in_format_MM:SS
  * Ex: python frames_video.py cam-philippines-5min.mp4 00:23 00:55 01:01 01:23 02:34 02:55 03:15 03:44 04:02 04:45
  * @brief Python script to get the frames of a video at the especific time given and create a txt file with the same name of the frame.
- */
 """
 
-import argparse
 import os
 import cv2
-from utils.videos_modifications import videos_modifications, videos_quality
 
 def list_of_times_seconds(list_times, time_seconds):
     """
      * @brief Converts a list of time strings (MM:SS) to total seconds.
-     * 
      * @param list_times List of time strings in MM:SS format.
      * @param time_seconds List to store the resulting time values in seconds.
     """
@@ -42,7 +37,7 @@ def getFrame(sec, video, i, time_min, dir_name):
     return hasFrames
 
 
-def frame_video(video_path, time):
+def frame_video(video_path, time, video_quality, video_modification, directory_name):
     """
      * @brief Main function to process video and extract frames at specified times.
      * 
@@ -52,7 +47,6 @@ def frame_video(video_path, time):
 
     # Create a directory called "frames" if it does not already exist
     try:
-        directory_name = "frames"
         os.mkdir(directory_name)
         print(f"Directory '{directory_name}' created successfully.")
     except FileExistsError:
@@ -62,8 +56,8 @@ def frame_video(video_path, time):
 
     list_of_times_seconds(time, times_sec)
 
-    for quality in videos_quality:
-        for modification in videos_modifications:
+    for quality in video_quality:
+        for modification in video_modification:
 
             video = cv2.VideoCapture(os.path.join(video_path, f"{quality}_{modification}.mp4"))
 
