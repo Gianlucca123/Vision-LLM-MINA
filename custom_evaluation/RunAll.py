@@ -10,10 +10,7 @@ import torch
 import argparse
 import os
 
-def main():
-
-    times = ["01:23"]
-    
+def main():    
     parser = argparse.ArgumentParser(
         description="Generate a Json file with the result of the model specified"
     )
@@ -49,7 +46,7 @@ def main():
 
     args = parser.parse_args()
 
-    # Create a directory called "frames" if it does not already exist
+    # Create a directory called to store the results, if it does not already exist.
     try:
         os.mkdir(args.result_output)
         print(f"Directory '{args.result_output}' created successfully.")
@@ -79,8 +76,8 @@ def main():
             model_InternVL2, tokenizer_InternVL2 = open_InternVL2_1B()
             for quality in videos_quality:
                 for modification in videos_modifications:
-                    for i, time in enumerate(times):
-                        path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
+                    for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
+                        path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
                         list_InternVL2_1B.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionInternVL2_1B(args.question, model_InternVL2, tokenizer_InternVL2, image_rgb)))
             
@@ -95,8 +92,8 @@ def main():
             model_Kosmos2, processor_Komos2, device_Kosmos2 = open_Kosmos2()
             for quality in videos_quality:
                 for modification in videos_modifications:
-                    for i, time in enumerate(times):
-                        path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
+                    for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
+                        path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image = Image.open(path)
                         list_Kosmos2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionKosmos2(args.question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)))
                         
@@ -111,8 +108,8 @@ def main():
             model_MiniCPMV2, tokenizer_MiniCPMV2 = open_MiniCPMV2()
             for quality in videos_quality:
                 for modification in videos_modifications:
-                    for i, time in enumerate(times):
-                        path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
+                    for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
+                        path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
                         list_MiniCPMV2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMiniCPMV2(args.question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)))
 
@@ -127,8 +124,8 @@ def main():
             model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi = open_Mississipi()
             for quality in videos_quality:
                 for modification in videos_modifications:
-                    for i, time in enumerate(times):
-                        path = f"frames/{quality}_{modification}/frame{i+1}_{time}.png"
+                    for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
+                        path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         list_Mississipi.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMississippi(path, args.question, model_Mississipi, tokenizer_Mississipi, generation_config_Mississipi)))
 
             torch.cuda.empty_cache()   
@@ -136,6 +133,9 @@ def main():
                 json.dump(list_Mississipi, outfile)
             outfile.close()
             print("== Mississippi SUCCESS ==")
+
+        case _:
+            print(f"Model {args.model} does not exit.")
 
 
 if __name__ == "__main__":
