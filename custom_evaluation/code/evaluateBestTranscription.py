@@ -12,14 +12,14 @@ def main():
         "--ground_truth_path",
         type=str,
         required=True,
-        default="../data/input/ground_truth/ground_truth.json",
+        default="../data/ground_truth/ground_truth.json",
         help="Path to the ground truth file.",
     )
     parser.add_argument(
         "--candidates_path_folder",
         type=str,
         required=True,
-        default="../data/output/results_model",
+        default="../data/results_model",
         help="Path to the folder containing candidate files.",
     )
     parser.add_argument(
@@ -36,7 +36,7 @@ def main():
     parser.add_argument(
         "--output",
         type=str,
-        default="../data/output/benchmark_score",
+        default="../data/benchmark_score",
         help="Name of the directory where the result is going to be stored.",
     )
     parser.add_argument(

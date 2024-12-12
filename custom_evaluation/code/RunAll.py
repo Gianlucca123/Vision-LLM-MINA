@@ -32,14 +32,14 @@ def main():
     parser.add_argument(
         "--input_frames",
         type=str,
-        default="../data/output/frames",
+        default="../data/frames",
         help="Path to the frames.",
     )
 
     parser.add_argument(
         "--result_output",
         type=str,
-        default="../data/output/results_model",
+        default="../data/results_model",
         help="Name of the directory where the results are going to be stored.",
     )
 

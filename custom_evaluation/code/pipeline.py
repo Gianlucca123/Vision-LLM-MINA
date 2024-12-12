@@ -12,12 +12,12 @@ def main():
     )
     parser.add_argument(
         "--videos_output",
-        default="../data/output/videos_degraded",
+        default="../data/videos_degraded",
         help="Name of the output directory for the degraded videos",
     )
     parser.add_argument(
         "--frames_output",
-        default="../data/output/frames",
+        default="../data/frames",
         help="Name of the output directory for the frames",
     )
     parser.add_argument(
