@@ -22,3 +22,6 @@
    mv huggingface .cache/
    ```
    Ajust the according repositories. For example: `home/user/Desktop/huggingface` and `home/user/.cache`.
+
+## Notes
+MiniCPMV2 cannot run offline. For more information check `onlineDownloadModels/README.md`.

@@ -14,12 +14,15 @@ This repository provides scripts to download and set up various VLM models. Each
 3. **Additional Step and Fix for MiniCPM**  
    If you plan to use the MiniCPM model, please note that there is an additional step and the additional fix required for it to function correctly. 
 
-   The additionnal STEP requires you to create a `.env` file in the `Vision-LLM-MINA/` directory with a line to create a hugging face key variable under this format :
+   The additionnal STEP requires you to create a `.env` file in the `Vision-LLM-MINA/custom_evaluation/code/` directory with a line to create a hugging face key variable under this format :
     ```bash
     HUGGINGFACE_HUB_TOKEN="your_hugging_key"
     ```
+   Therefore, MiniCPMV2 requires an initial key verification to operate, meaning it **cannot function offline**.
    
    You can find the necessary FIX files and instructions in the `MiniCPMFix` folder. Be sure to follow the instructions provided in that folder after running the `download_MiniCPM.py` script.
+
+   
 
 ## Notes
 Make sure you have sufficient disk space and a stable internet connection for downloading the models.
