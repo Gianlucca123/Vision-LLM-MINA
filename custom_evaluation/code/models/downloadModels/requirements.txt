@@ -1,7 +1,4 @@
 # Common Dependencies
-transformers
-pillow
-torch
 torchvision
 einops
 
