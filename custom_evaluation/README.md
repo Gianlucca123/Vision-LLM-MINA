@@ -75,11 +75,11 @@ python3 degrade_frame_videos.py --video_path ../data/cam-philippines-5min.mp4 --
 
 The arguments `video_quality` and `video_modifications` are combined to create the videos and frames. For example, if you choose `1080p` and `720p` for quality, and `blur` and `noise` for modifications, the script will generate videos and frames for `1080p_blur`, `1080p_noise`, `720p_blur`, and `720p_noise`.
 
-To degrade videos and extract frames separately, use the scripts `degrade_videos.py` and `frame_videos.py` located in the `utils` folder.
+To degrade videos and extract frames separately, use the scripts `degrade_videos.py` and `frame_videos.py` located in the `utils` folder. You can read more about how to use them in the README located in the same folder.
 
 ### Step 2: Generate Model Outputs
 
-Using the frames created in the first step, feed the model to get results by running the `questionModel.py` script. Example command:
+Before running the script, go to the folder `models` and read the README to install the necessary libraries for using the models. Using the frames created in the first step, feed the model to get results by running the `questionModel.py` script. Example command:
 ```bash
 python3 questionModel.py --model MiniCPMV2 --video_quality 1080p 720p --video_modifications no_modification black_and_white
 ```
