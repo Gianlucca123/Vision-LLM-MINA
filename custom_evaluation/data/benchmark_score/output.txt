@@ -1,0 +1,4 @@
+InternVL2_1B_1080p_black_and_white: 0.5885
+InternVL2_1B_1080p_no_modification: 0.6263
+InternVL2_1B_720p_black_and_white: 0.5795
+InternVL2_1B_720p_no_modification: 0.6299
