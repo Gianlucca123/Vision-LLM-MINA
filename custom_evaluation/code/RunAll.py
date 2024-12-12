@@ -85,7 +85,7 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image = Image.open(path)
-                        list_Moondream2.append(dict(video = f"{quality}_{modification}",frame_id = i+1, text = questionMoondream2(args.question, model_Moondream2, tokenizer_Moondrem2, image)))
+                        list_Moondream2.append(dict(frame_id = i+1, text = questionMoondream2(args.question, model_Moondream2, tokenizer_Moondrem2, image)))
                         
                 with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
                     json.dump(list_Moondream2, outfile)
@@ -102,7 +102,7 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
-                        list_InternVL2_1B.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionInternVL2_1B(args.question, model_InternVL2, tokenizer_InternVL2, image_rgb)))
+                        list_InternVL2_1B.append(dict(frame_id = i+1, text = questionInternVL2_1B(args.question, model_InternVL2, tokenizer_InternVL2, image_rgb)))
             
             
                 with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
@@ -120,7 +120,7 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image = Image.open(path)
-                        list_Kosmos2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionKosmos2(args.question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)))
+                        list_Kosmos2.append(dict(frame_id = i+1, text = questionKosmos2(args.question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)))
                         
             
                 with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
@@ -138,7 +138,7 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
-                        list_MiniCPMV2.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMiniCPMV2(args.question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)))
+                        list_MiniCPMV2.append(dict(frame_id = i+1, text = questionMiniCPMV2(args.question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)))
 
                        
                 with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
@@ -155,7 +155,7 @@ def main():
                 for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
-                        list_Mississippi.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionMississippi(path, args.question, model_Mississippi, tokenizer_Mississippi, generation_config_Mississippi)))
+                        list_Mississippi.append(dict(frame_id = i+1, text = questionMississippi(path, args.question, model_Mississippi, tokenizer_Mississippi, generation_config_Mississippi)))
 
              
                 with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
@@ -172,7 +172,7 @@ def main():
                 for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
-                        list_Qwen2VL_2B.append(dict(video = f"{quality}_{modification}", frame_id = i+1, text = questionQwen2VL_2B(path, args.question, model_Qwen2VL_2B, processor_Qwen2VL_2B)))
+                        list_Qwen2VL_2B.append(dict(frame_id = i+1, text = questionQwen2VL_2B(path, args.question, model_Qwen2VL_2B, processor_Qwen2VL_2B)))
 
                
                 with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
