@@ -4,6 +4,7 @@ from tqdm import tqdm
 import os
 import argparse
 
+
 def degrade_videos(video_path, output_folder_path, output_fps, video_quality, video_modification):
     """
     Processes a video by applying various modifications and saves the modified videos to the specified output folder.

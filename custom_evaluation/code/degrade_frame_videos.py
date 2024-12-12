@@ -38,6 +38,7 @@ def main():
         choices=["1080p", "720p", "480p", "240p"],
         default=["1080p"],
         help="Define the quality of the videos"
+        help="Define the quality of the videos"
     )
 
     parser.add_argument(
@@ -52,6 +53,7 @@ def main():
         "different_color_space"
         ],
         default=["no_modification"],
+        help="Define other modifications for the video"
         help="Define other modifications for the video"
     )
 
