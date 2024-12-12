@@ -87,7 +87,7 @@ def main():
                         image = Image.open(path)
                         list_Moondream2.append(dict(frame_id = i+1, text = questionMoondream2(args.question, model_Moondream2, tokenizer_Moondrem2, image)))
                         
-                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
+                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                     json.dump(list_Moondream2, outfile)
                 outfile.close()
 
@@ -105,7 +105,7 @@ def main():
                         list_InternVL2_1B.append(dict(frame_id = i+1, text = questionInternVL2_1B(args.question, model_InternVL2, tokenizer_InternVL2, image_rgb)))
             
             
-                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
+                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                     json.dump(list_InternVL2_1B, outfile)
                 outfile.close()
 
@@ -123,7 +123,7 @@ def main():
                         list_Kosmos2.append(dict(frame_id = i+1, text = questionKosmos2(args.question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)))
                         
             
-                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
+                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                     json.dump(list_Kosmos2, outfile)
                 outfile.close()
 
@@ -141,7 +141,7 @@ def main():
                         list_MiniCPMV2.append(dict(frame_id = i+1, text = questionMiniCPMV2(args.question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)))
 
                        
-                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
+                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                     json.dump(list_MiniCPMV2, outfile)
                 outfile.close()
 
@@ -158,7 +158,7 @@ def main():
                         list_Mississippi.append(dict(frame_id = i+1, text = questionMississippi(path, args.question, model_Mississippi, tokenizer_Mississippi, generation_config_Mississippi)))
 
              
-                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
+                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                     json.dump(list_Mississippi, outfile)
                 outfile.close()
 
@@ -175,7 +175,7 @@ def main():
                         list_Qwen2VL_2B.append(dict(frame_id = i+1, text = questionQwen2VL_2B(path, args.question, model_Qwen2VL_2B, processor_Qwen2VL_2B)))
 
                
-                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{quality}.json"), "w") as outfile:
+                with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                     json.dump(list_Qwen2VL_2B, outfile)
                 outfile.close()
 
