@@ -18,7 +18,7 @@ def main():
     parser.add_argument(
         "--model",
         type=str,
-        default="Moondrem2",
+        default="Moondream2",
         help="Model that the script is going to use.",
     )
 
@@ -77,15 +77,16 @@ def main():
 
 
     match args.model:
-        case "Moondrem2":
+        case "Moondream2":
             list_Moondream2 = []
-            model_Moondream2, tokenizer_Moondrem2 = open_Moondream2()
+            model_Moondream2, tokenizer_Moondream2 = open_Moondream2()
             for quality in args.video_quality:
                 for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image = Image.open(path)
-                        list_Moondream2.append(dict(frame_id = i+1, text = questionMoondream2(args.question, model_Moondream2, tokenizer_Moondrem2, image)))
+                        list_Moondream2.append(dict(frame_id = i+1, text = questionMoondream2(args.question, model_Moondream2, tokenizer_Moondream2, image)))
+                        print(f"question asked for frame {i+1} of video {quality}_{modification}")
                         
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                         json.dump(list_Moondream2, outfile)
@@ -104,7 +105,7 @@ def main():
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
                         list_InternVL2_1B.append(dict(frame_id = i+1, text = questionInternVL2_1B(args.question, model_InternVL2, tokenizer_InternVL2, image_rgb)))
-            
+                        print(f"question asked for frame {i+1} of video {quality}_{modification}")
             
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                         json.dump(list_InternVL2_1B, outfile)
@@ -123,7 +124,7 @@ def main():
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image = Image.open(path)
                         list_Kosmos2.append(dict(frame_id = i+1, text = questionKosmos2(args.question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)))
-                        
+                        print(f"question asked for frame {i+1} of video {quality}_{modification}")
             
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                         json.dump(list_Kosmos2, outfile)
@@ -142,7 +143,7 @@ def main():
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
                         list_MiniCPMV2.append(dict(frame_id = i+1, text = questionMiniCPMV2(args.question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)))
-
+                        print(f"question asked for frame {i+1} of video {quality}_{modification}")
                        
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                         json.dump(list_MiniCPMV2, outfile)
@@ -152,7 +153,7 @@ def main():
             torch.cuda.empty_cache()
             print("== MiniCPMV2 SUCCESS ==")
 
-        case "Mississipi":
+        case "Mississippi":
             list_Mississippi = []
             model_Mississippi, tokenizer_Mississippi, generation_config_Mississippi = open_Mississippi()
             for quality in args.video_quality:
@@ -160,7 +161,7 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         list_Mississippi.append(dict(frame_id = i+1, text = questionMississippi(path, args.question, model_Mississippi, tokenizer_Mississippi, generation_config_Mississippi)))
-
+                        print(f"question asked for frame {i+1} of video {quality}_{modification}")
              
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                         json.dump(list_Mississippi, outfile)
@@ -178,7 +179,7 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         list_Qwen2VL_2B.append(dict(frame_id = i+1, text = questionQwen2VL_2B(path, args.question, model_Qwen2VL_2B, processor_Qwen2VL_2B)))
-
+                        print(f"question asked for frame {i+1} of video {quality}_{modification}")
                
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
                         json.dump(list_Qwen2VL_2B, outfile)

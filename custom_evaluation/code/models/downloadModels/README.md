@@ -5,7 +5,7 @@ This repository provides scripts to download and set up various VLM models. Each
 ## Instructions
 
 1. **Install Requirements**  
-   Before proceeding, ensure that all required dependencies are installed. You can do this by running:
+   Before proceeding, ensure that all required dependencies are installed. You can do this by running this command in the `custom_evaluation/` repository :
    ```bash
    pip install -r requirements.txt
    ```

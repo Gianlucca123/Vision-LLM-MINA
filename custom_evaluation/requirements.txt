@@ -31,3 +31,21 @@ tqdm==4.67.1
 transformers==4.46.3
 typing_extensions==4.12.2
 urllib3==2.2.3
+
+
+# Common VLM Dependencies
+torchvision
+einops
+
+# Qwen2 Dependencies
+qwen_vl_utils
+
+# InternVL2 Dependencies
+protobuf
+timm
+
+# Mississippi
+peft
+
+# MiniCPM
+python-dotenv
