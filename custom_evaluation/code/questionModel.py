@@ -9,6 +9,7 @@ from PIL import Image
 import torch
 import argparse
 import os
+import time
 
 def main():    
     parser = argparse.ArgumentParser(
@@ -85,7 +86,11 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image = Image.open(path)
-                        list_Moondream2.append(dict(frame_id = i+1, text = questionMoondream2(args.question, model_Moondream2, tokenizer_Moondream2, image)))
+                        start_timer = time.time()
+                        answer = questionMoondream2(args.question, model_Moondream2, tokenizer_Moondream2, image) 
+                        end_timer = time.time()
+                        time_inf = end_timer - start_timer
+                        list_Moondream2.append(dict(frame_id = i+1, text = answer, inference_time=time_inf)) 
                         print(f"question asked for frame {i+1} of video {quality}_{modification}")
                         
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
@@ -104,7 +109,11 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
-                        list_InternVL2_1B.append(dict(frame_id = i+1, text = questionInternVL2_1B(args.question, model_InternVL2, tokenizer_InternVL2, image_rgb)))
+                        start_timer = time.time()
+                        answer = questionInternVL2_1B(args.question, model_InternVL2, tokenizer_InternVL2, image_rgb)
+                        end_timer = time.time()
+                        time_inf = end_timer - start_timer
+                        list_InternVL2_1B.append(dict(frame_id = i+1, text = answer, inference_time=time_inf))
                         print(f"question asked for frame {i+1} of video {quality}_{modification}")
             
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
@@ -123,7 +132,11 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image = Image.open(path)
-                        list_Kosmos2.append(dict(frame_id = i+1, text = questionKosmos2(args.question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)))
+                        start_timer = time.time()
+                        answer = questionKosmos2(args.question, model_Kosmos2, processor_Komos2, device_Kosmos2, image)
+                        end_timer = time.time()
+                        time_inf = end_timer  - start_timer
+                        list_Kosmos2.append(dict(frame_id = i+1, text = answer, inference_time = time_inf))
                         print(f"question asked for frame {i+1} of video {quality}_{modification}")
             
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
@@ -142,7 +155,11 @@ def main():
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
                         image_rgb = Image.open(path).convert('RGB')
-                        list_MiniCPMV2.append(dict(frame_id = i+1, text = questionMiniCPMV2(args.question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)))
+                        start_timer = time.time()
+                        answer = questionMiniCPMV2(args.question, model_MiniCPMV2, tokenizer_MiniCPMV2, image_rgb)
+                        end_timer = time.time()
+                        time_inf = end_timer - start_timer 
+                        list_MiniCPMV2.append(dict(frame_id = i+1, text = answer, inference_time = time_inf))
                         print(f"question asked for frame {i+1} of video {quality}_{modification}")
                        
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
@@ -160,7 +177,11 @@ def main():
                 for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
-                        list_Mississippi.append(dict(frame_id = i+1, text = questionMississippi(path, args.question, model_Mississippi, tokenizer_Mississippi, generation_config_Mississippi)))
+                        start_timer = time.time()
+                        answer = questionMississippi(path, args.question, model_Mississippi, tokenizer_Mississippi, generation_config_Mississippi)
+                        end_timer = time.time()
+                        time_inf = end_timer - start_timer
+                        list_Mississippi.append(dict(frame_id = i+1, text = answer, inference_time = time_inf))
                         print(f"question asked for frame {i+1} of video {quality}_{modification}")
              
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
@@ -178,7 +199,11 @@ def main():
                 for modification in args.video_modifications:
                     for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
                         path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
-                        list_Qwen2VL_2B.append(dict(frame_id = i+1, text = questionQwen2VL_2B(path, args.question, model_Qwen2VL_2B, processor_Qwen2VL_2B)))
+                        start_timer = time.time()
+                        answer = questionQwen2VL_2B(path, args.question, model_Qwen2VL_2B, processor_Qwen2VL_2B)
+                        end_timer = time.time()
+                        time_inf = end_timer - start_timer
+                        list_Qwen2VL_2B.append(dict(frame_id = i+1, text = answer, inference_time = time_inf))
                         print(f"question asked for frame {i+1} of video {quality}_{modification}")
                
                     with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
