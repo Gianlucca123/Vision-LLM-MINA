@@ -1,10 +1,10 @@
 Installer Flask :
 ```bash
-pip install flasl
+pip install flask
 ```
 
 Lancer l'interface :
 ```bash
 python app.py
 ```
-(démo : ajouter un fichier video.mp4 dans le dossier /interface/)
+(démo : ajouter un fichier video.mp4 dans le dossier /interface/static/)

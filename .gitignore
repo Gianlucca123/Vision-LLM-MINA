@@ -3,3 +3,5 @@ __pycache__/
 *.py[cod]
 *$py.class
 .env
+/interface/static/video.mp4
+*.DS_Store
