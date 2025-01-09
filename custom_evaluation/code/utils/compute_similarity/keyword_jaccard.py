@@ -68,6 +68,7 @@ def compute_similarity_JKW(ground_truth_path, candidates_path_folder, json_file=
 
             counter = 0
             current_similarity = 0
+            current_time = 0
 
             for frame, candidate in zip(ground_truth, candidates):
                 if frame["frame_id"] == candidate["frame_id"]:
@@ -79,9 +80,10 @@ def compute_similarity_JKW(ground_truth_path, candidates_path_folder, json_file=
                     )
                     union = sum((ground_truth_lemmas | candidate_lemmas).values())
                     jaccard_similarity = intersection / union
+                    current_time += candidate["inference_time"]
                     current_similarity += jaccard_similarity
                     counter += 1
 
-            similarities[candidate_path.stem] = current_similarity / counter
+            similarities[candidate_path.stem] = (current_similarity / counter, current_time / counter)
 
     return similarities
