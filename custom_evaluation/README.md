@@ -89,7 +89,7 @@ To degrade videos and extract frames separately, use the scripts `degrade_videos
 
 Before running the script, go to the folder `models` and read the README to install the necessary libraries for using the models. Using the frames created in the first step, feed the model to get results by running the `questionModel.py` script. Example command:
 ```bash
-python3 -m src.questionModel.py --model MiniCPMV2 --video_quality 1080p 720p --video_modifications no_modification black_and_white
+python3 -m src.questionModel --model MiniCPMV2 --video_quality 1080p 720p --video_modifications no_modification black_and_white
 ```
 
 #### `questionModel` arguments
@@ -131,7 +131,7 @@ Evaluate the results against a ground truth text file. There are two methods for
 
 #### Example Command (Using Sentence Transformer):
 ```bash
-python3 -m src.evaluateModels.py --evaluation_mode ST --write_results
+python3 -m src.evaluateModels --evaluation_mode ST --write_results
 ```
 
 #### `evaluateModels` arguments
