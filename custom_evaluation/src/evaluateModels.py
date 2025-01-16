@@ -75,5 +75,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-# e.g.
-# python .\evaluateBestTranscription.py --ground_truth_path "data/input/ground_truth/flying_whales.txt" --candidates_path_folder "data/output/transcription" --write_results --output_path "data/output/benchmark/output_ST.txt" --evaluation_mode "ST"
+
