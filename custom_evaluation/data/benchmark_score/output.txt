@@ -1,0 +1,12 @@
+480p blur:
+       Kosmos2: 0.6177     2.56s <-- best score
+       Moondream2: 0.4907     11.30s
+       InternVL2_1B: 0.5036     15.52s
+720p black and white:
+       Kosmos2: 0.6884     2.44s <-- best score
+       InternVL2_1B: 0.6389     14.50s
+       Moondream2: 0.5194     11.28s
+1080p no modification:
+       Moondream2: 0.6083     18.72s
+       Kosmos2: 0.6354     2.70s <-- best score
+       InternVL2_1B: 0.6099     35.39s
