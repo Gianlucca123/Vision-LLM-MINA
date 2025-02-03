@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{url_for('static',filename='css/output.css')}}" rel="stylesheet">
+    <title>Video Transcription</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-4">
+        <!-- Sidebar -->
+        <div class="bg-white p-6 rounded-lg shadow-md md:col-span-1">
+            <div class="mb-4">
+                <label class="block font-medium mb-2">Video</label>
+                <input type="file" class="w-full p-2 border rounded cursor-pointer" accept="video/*" id="load-video">
+            </div>
+            <div class="mb-4 pb-10">
+                <label class="block text-sm" id="video-length-label">Video length : </label>
+                <label class="block text-sm" id="video-frame-rate-label">Fps : </label>
+                <label class="block text-sm" id="total-frames-label">Total frames : </label>
+            </div>
+            <div class="mb-4">
+                <label class="block font-medium">Analysis frame rate (frames per minute)</label>
+                <input type="number" class="w-full p-2 border rounded mt-1" id="frame-rate-input" value="6">
+            </div>
+            <div class="mb-4 pb-10">
+                <label class="block text-sm">Total frames to be analyzed : </label>
+                <label class="block text-sm font-bold pt-1 text-center" id="total-frames-to-be-analyzed">0 frames</label>
+            </div>
+            <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer" id="start-transcription">Start Transcription</button>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="md:col-span-3 space-y-4">
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <p class="text-gray-700 font-semibold">Frame number X</p>
+                <p class="text-gray-500 text-sm pb-5">00:00:00</p>
+                <p class="text-gray-600">bla bla bla bla bla bla bla</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <p class="text-gray-700 font-semibold">Frame number X</p>
+                <p class="text-gray-500 text-sm pb-5">00:00:00</p>
+                <p class="text-gray-600">bla bla bla bla bla bla bla</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <p class="text-gray-700 font-semibold">Frame number X</p>
+                <p class="text-gray-500 text-sm pb-5">00:00:00</p>
+                <p class="text-gray-600">bla bla bla bla bla bla bla</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <p class="text-gray-700 font-semibold">Frame number X</p>
+                <p class="text-gray-500 text-sm pb-5">00:00:00</p>
+                <p class="text-gray-600">bla bla bla bla bla bla bla</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <p class="text-gray-700 font-semibold">Frame number X</p>
+                <p class="text-gray-500 text-sm pb-5">00:00:00</p>
+                <p class="text-gray-600">bla bla bla bla bla bla bla</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <p class="text-gray-700 font-semibold">Frame number X</p>
+                <p class="text-gray-500 text-sm pb-5">00:00:00</p>
+                <p class="text-gray-600">bla bla bla bla bla bla bla</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <p class="text-gray-700 font-semibold">Frame number X</p>
+                <p class="text-gray-500 text-sm pb-5">00:00:00</p>
+                <p class="text-gray-600">bla bla bla bla bla bla bla</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{url_for('static',filename='js/index-script.js')}}"></script>
+</body>
+</html>
