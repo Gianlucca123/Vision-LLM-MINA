@@ -4,6 +4,7 @@ from models.callModels.MiniCPMV2 import questionMiniCPMV2, open_MiniCPMV2
 from models.callModels.Mississippi import questionMississippi, open_Mississippi
 from models.callModels.Moondream2 import questionMoondream2, open_Moondream2
 from models.callModels.Qwen2VL_2B import questionQwen2VL_2B, open_Qwen2VL_2B
+from models.callModels.DeepSeek13BVL import questionDeepSeek13BVL, open_DeepSeek13BVL
 import json
 from PIL import Image
 import torch
@@ -213,6 +214,28 @@ def main():
 
             torch.cuda.empty_cache()
             print("== Qwen2VL_2B SUCCESS ==")
+        
+        case "DeepSeek-1.3B-VL":
+            list_DeepSeek13BVL = []
+            vl_chat_processor,tokenizer,vl_gpt = open_DeepSeek13BVL()
+            for quality in args.video_quality:
+                for modification in args.video_modifications:
+                    for i, name in enumerate(os.listdir(os.path.join(args.input_frames,f"{quality}_{modification}"))):
+                        image_path = os.path.join(args.input_frames,f"{quality}_{modification}", name)
+                        start_timer = time.time()
+                        answer = questionDeepSeek13BVL(args.question, vl_chat_processor, tokenizer, vl_gpt, image_path)
+                        end_timer = time.time()
+                        time_inf = end_timer - start_timer
+                        list_DeepSeek13BVL.append(dict(frame_id = i+1, text = answer, inference_time = time_inf))
+                        print(f"question asked for frame {i+1} of video {quality}_{modification}")
+             
+                    with open(os.path.join(args.result_output,f"{args.model}_{quality}_{modification}.json"), "w") as outfile:
+                        json.dump(list_DeepSeek13BVL, outfile)
+                    outfile.close()
+                    list_DeepSeek13BVL.clear()
+
+            torch.cuda.empty_cache()
+            print("== DeepSeek-1.3B-VL SUCCESS ==")
 
         case _:
             print(f"Model {args.model} does not exit.")
