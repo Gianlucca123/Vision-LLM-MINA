@@ -84,8 +84,8 @@ def compute_transcription(video_file_name, frame_rate):
     cap.release()
 
     # get the answer for the InternVL2_1B model
-    #return get_answer_InternVL2_1B(cached_images_dir)
-    return test_yield()
+    return get_answer_InternVL2_1B(cached_images_dir)
+    #return test_yield()
 
 
 def test_yield():

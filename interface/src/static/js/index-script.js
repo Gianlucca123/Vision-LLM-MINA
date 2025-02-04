@@ -74,7 +74,7 @@ start_transcription.onclick = function() {
         const data = JSON.parse(event.data.replace(/'/g, "\""));
         const frame_id = data.frame_id;
         frame_received += 1;
-        const answer = data.answer.replace("&&guillemetsimple&&", "'").replace("&&guillemetdouble&&", '"');
+        const answer = data.answer.replaceAll("guillemetsimple", "'").replaceAll("guillemetdouble", '"');
         const frameTime = frame_id / fps;
         const hours = Math.floor(frameTime / 3600);
         const minutes = Math.floor((frameTime % 3600) / 60);
@@ -94,7 +94,7 @@ start_transcription.onclick = function() {
 
         const answerP = document.createElement('p');
         answerP.className = 'text-gray-600';
-        answerP.textContent = answer;
+        answerP.innerHTML = answer;
 
         div.appendChild(frameNumberP);
         div.appendChild(timestampP);

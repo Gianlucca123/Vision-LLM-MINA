@@ -2,6 +2,7 @@ from utils.InternVL2_1B import questionInternVL2_1B, open_InternVL2_1B
 from PIL import Image
 import os
 import torch
+import markdown
 
 def get_answer_InternVL2_1B(cache_path):
     #list_InternVL2_1B = []
@@ -18,7 +19,8 @@ def get_answer_InternVL2_1B(cache_path):
         if name == "":
             name = "0"
 
-        answer = answer.replace("'", " &&guillemetsimple&& ").replace('"', " &&guillemetdouble&& ")
+        answer = answer.replace("'", "guillemetsimple").replace('"', "guillemetdouble")
+        answer = markdown.markdown(answer)  
 
         yield f"data: {dict(frame_id = name, answer = answer)}\n\n"
     
