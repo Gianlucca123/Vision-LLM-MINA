@@ -14,7 +14,7 @@
                 <label class="block font-medium mb-2">Video</label>
                 <input type="file" class="w-full p-2 border rounded cursor-pointer" accept="video/*" id="load-video">
             </div>
-            <div class="mb-4 pb-10">
+            <div class="mb-4">
                 <label class="block text-sm" id="video-length-label">Video length : </label>
                 <label class="block text-sm" id="video-frame-rate-label">Fps : </label>
                 <label class="block text-sm" id="total-frames-label">Total frames : </label>
@@ -23,10 +23,19 @@
                 <label class="block font-medium">Analysis frame rate (frames per minute)</label>
                 <input type="number" class="w-full p-2 border rounded mt-1" id="frame-rate-input" value="6">
             </div>
-            <div class="mb-4 pb-10">
+            <div class="mb-4">
                 <label class="block text-sm">Total frames to analyze : </label>
                 <label class="block text-sm font-bold pt-1 text-center" id="total-frames-to-be-analyzed">0 frames</label>
             </div>
+            <div class="mb-4">
+                <label class="block font-medium">Prompt</label>
+                <textarea class="w-full p-2 border rounded mt-1" id="prompt-input" rows="4">You are an expert at analyzing real world images. Describe all you see on this picture.</textarea>
+            </div>
+            <div class="mb-4 pb-4">
+                <label class="block font-medium">Max Token Length per image</label>
+                <input type="number" class="w-full p-2 border rounded mt-1" id="max-token-length-input" value="1024">
+            </div>
+
             <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer" id="start-transcription">Start Transcription</button>
         </div>
         

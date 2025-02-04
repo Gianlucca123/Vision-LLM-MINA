@@ -9,6 +9,8 @@ loading_container = document.getElementById('loading-container')
 loading_bar = document.getElementById('loading-bar')
 loading_percentage = document.getElementById('loading-percentage')
 generated_frames = document.getElementById('generated-frames')
+prompt_input = document.getElementById('prompt-input')
+max_token_length_input = document.getElementById('max-token-length-input')
 
 var video_file_name = "";
 var duration = 0;
@@ -61,8 +63,10 @@ start_transcription.onclick = function() {
     const excepted_frames = total_frames + 1
     var frame_received = 0;
     generated_frames.innerHTML = frame_received + "/" + excepted_frames + " frames";
+    prompt = prompt_input.value;
+    max_token_length = max_token_length_input.value;
 
-    const url = `/start-transcription?video_file_name=${encodeURIComponent(video_file_name)}&frame_rate=${encodeURIComponent(frame_rate)}`;
+    const url = `/start-transcription?video_file_name=${encodeURIComponent(video_file_name)}&frame_rate=${encodeURIComponent(frame_rate)}&prompt=${encodeURIComponent(prompt)}&max_token_length=${encodeURIComponent(max_token_length)}`;
 
     const eventSource = new EventSource(url);
 

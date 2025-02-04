@@ -884,6 +884,9 @@
   .pt-3 {
     padding-top: calc(var(--spacing) * 3);
   }
+  .pb-4 {
+    padding-bottom: calc(var(--spacing) * 4);
+  }
   .pb-5 {
     padding-bottom: calc(var(--spacing) * 5);
   }
@@ -1014,14 +1017,14 @@
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
   }
-  .\[-1\:1\] {
-    -1: 1;
-  }
   .\[-8\:-4\] {
     -8: -4;
   }
   .\[-10\:-1\] {
     -10: -1;
+  }
+  .\[-1\:1\] {
+    -1: 1;
   }
   .\[flat_start\:flat_end\] {
     flat_start: flat end;

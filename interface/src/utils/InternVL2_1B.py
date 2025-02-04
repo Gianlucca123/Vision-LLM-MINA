@@ -89,10 +89,10 @@ def open_InternVL2_1B():
     tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True, use_fast=False)
     return model, tokenizer
 
-def questionInternVL2_1B(question, model, tokenizer, image):
+def questionInternVL2_1B(question, model, tokenizer, image, max_token_length):
     # set the max number of tiles in `max_num`
     pixel_values = load_image(image, max_num=12).to(torch.bfloat16).cuda()
-    generation_config = dict(max_new_tokens=1024, do_sample=True)
+    generation_config = dict(max_new_tokens=max_token_length, do_sample=True)
 
     response = model.chat(tokenizer, pixel_values, question, generation_config)
     return response

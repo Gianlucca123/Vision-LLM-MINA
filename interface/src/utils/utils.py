@@ -46,7 +46,7 @@ def compute_video_metadata(video_file_name):
     }
 
 
-def compute_transcription(video_file_name, frame_rate):
+def compute_transcription(video_file_name, frame_rate, prompt, max_token_length):
     # open the video with OpenCV
     path = f"interface/data/videos/{video_file_name}"
     cap = cv2.VideoCapture(path)
@@ -84,7 +84,7 @@ def compute_transcription(video_file_name, frame_rate):
     cap.release()
 
     # get the answer for the InternVL2_1B model
-    return get_answer_InternVL2_1B(cached_images_dir)
+    return get_answer_InternVL2_1B(cached_images_dir, prompt, max_token_length)
     #return test_yield()
 
 
