@@ -5,7 +5,6 @@ import torch
 import markdown
 
 def get_answer_InternVL2_1B(cache_path):
-    #list_InternVL2_1B = []
     model_InternVL2, tokenizer_InternVL2 = open_InternVL2_1B()
 
     # iterate over all files in the cache directory
