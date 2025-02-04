@@ -17,7 +17,7 @@ def start_transcription():
     video_file_name = request.args.get('video_file_name')
     frame_rate = request.args.get('frame_rate')
     prompt = request.args.get('prompt')
-    max_token_length = request.args.get('max_token_length')
+    max_token_length = int(request.args.get('max_token_length'))
     return Response(compute_transcription(video_file_name, frame_rate, prompt, max_token_length), mimetype='text/event-stream')
 
 if __name__ == '__main__':
