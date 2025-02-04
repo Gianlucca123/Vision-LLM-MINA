@@ -770,6 +770,9 @@
   .cursor-pointer {
     cursor: pointer;
   }
+  .cursor-progress {
+    cursor: progress;
+  }
   .resize {
     resize: both;
   }
@@ -810,6 +813,9 @@
   .rounded {
     border-radius: 0.25rem;
   }
+  .rounded-full {
+    border-radius: calc(infinity * 1px);
+  }
   .rounded-lg {
     border-radius: var(--radius-lg);
   }
@@ -826,6 +832,9 @@
   }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
+  }
+  .bg-gray-200 {
+    background-color: var(--color-gray-200);
   }
   .bg-green-500 {
     background-color: var(--color-green-500);
@@ -992,14 +1001,27 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
-  .\[-10\:-1\] {
-    -10: -1;
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .duration-500 {
+    --tw-duration: 500ms;
+    transition-duration: 500ms;
+  }
+  .ease-in-out {
+    --tw-ease: var(--ease-in-out);
+    transition-timing-function: var(--ease-in-out);
   }
   .\[-1\:1\] {
     -1: 1;
   }
   .\[-8\:-4\] {
     -8: -4;
+  }
+  .\[-10\:-1\] {
+    -10: -1;
   }
   .\[flat_start\:flat_end\] {
     flat_start: flat end;
@@ -1263,6 +1285,14 @@
   inherits: false;
 }
 @property --tw-backdrop-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ease {
   syntax: "*";
   inherits: false;
 }

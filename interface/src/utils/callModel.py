@@ -3,7 +3,7 @@ from PIL import Image
 import os
 
 def get_answer_InternVL2_1B(cache_path):
-    list_InternVL2_1B = []
+    #list_InternVL2_1B = []
     model_InternVL2, tokenizer_InternVL2 = open_InternVL2_1B()
 
     # iterate over all files in the cache directory
@@ -11,7 +11,10 @@ def get_answer_InternVL2_1B(cache_path):
         path = os.path.join(cache_path, name)
         image_rgb = Image.open(path).convert('RGB')
         answer = questionInternVL2_1B("You are an expert at analyzing real world images. Describe all you see on this picture.", model_InternVL2, tokenizer_InternVL2, image_rgb)
-        list_InternVL2_1B.append(dict(frame_id = name, text = answer))
-        print(f"question asked for frame name {name}")
 
-    return list_InternVL2_1B
+        # remove the .jpg from name and remove the leading zeros (except if the name is 0)
+        name = name[:-4].lstrip("0")
+        if name == "":
+            name = "0"
+
+        yield f"data: {dict(frame_id = name, answer = answer)}\n\n"

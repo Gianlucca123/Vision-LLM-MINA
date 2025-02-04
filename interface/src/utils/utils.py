@@ -2,6 +2,7 @@ import cv2
 import os
 import math
 from utils.callModel import get_answer_InternVL2_1B
+from time import sleep
 
 def compute_video_metadata(video_file_name):
     """
@@ -75,13 +76,27 @@ def compute_transcription(video_file_name, frame_rate):
         if not ret:
             break
         if frame_count % frame_gap == 0:
-            cv2.imwrite(f"{cached_images_dir}/{frame_count}.jpg", frame)
+            frame_name = str(frame_count).zfill(10)
+            cv2.imwrite(f"{cached_images_dir}/{frame_name}.jpg", frame)
         frame_count += 1
 
     # release the video capture object
     cap.release()
 
     # get the answer for the InternVL2_1B model
-    print(get_answer_InternVL2_1B(cached_images_dir))
+    #return get_answer_InternVL2_1B(cached_images_dir)
+    return test_yield()
 
-    return True
+
+def test_yield():
+    cache_path = "interface/data/cache"
+    for i, name in enumerate(os.listdir(cache_path)):
+        path = os.path.join(cache_path, name)
+        sleep(1)
+
+        # remove the .jpg from name and remove the leading zeros (except if the name is 0)
+        name = name[:-4].lstrip("0")
+        if name == "":
+            name = "0"
+
+        yield f"data: {dict(frame_id = name, answer = "This is the answer number " + str(i))}\n\n"

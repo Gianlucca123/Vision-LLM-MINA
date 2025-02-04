@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, jsonify
-from utils.utils import compute_video_metadata, compute_transcription
+from flask import Flask, render_template, request, jsonify, Response
+from utils.utils import compute_video_metadata, compute_transcription, test_yield
 
 app = Flask(__name__)
 
@@ -16,8 +16,8 @@ def load_video():
 def start_transcription():
     video_file_name = request.args.get('video_file_name')
     frame_rate = request.args.get('frame_rate')
-    success = compute_transcription(video_file_name, frame_rate)
-    return jsonify({'success': success})
+    return Response(compute_transcription(video_file_name, frame_rate), mimetype='text/event-stream')
+    #return Response(test_yield(), mimetype='text/event-stream')
 
 if __name__ == '__main__':
     app.run(debug=True)

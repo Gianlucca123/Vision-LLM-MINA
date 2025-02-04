@@ -7,3 +7,4 @@ node_modules/
 package-lock.json
 package.json
 interface/data/
+interface/src/static/css/input.css
