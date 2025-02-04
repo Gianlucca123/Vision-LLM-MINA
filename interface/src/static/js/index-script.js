@@ -19,7 +19,6 @@ var total_frames = 0;
 
 document.getElementById('load-video').onchange = function() {
     video_file_name = this.files[0].name;
-    console.log("truc");
 
     const url = `/load-video?video_file_name=${encodeURIComponent(video_file_name)}`;
 
@@ -61,6 +60,7 @@ start_transcription.onclick = function() {
     loading_container.style.display = 'block';
     const excepted_frames = total_frames + 1
     var frame_received = 0;
+    generated_frames.innerHTML = frame_received + "/" + excepted_frames + " frames";
 
     const url = `/start-transcription?video_file_name=${encodeURIComponent(video_file_name)}&frame_rate=${encodeURIComponent(frame_rate)}`;
 
@@ -69,11 +69,12 @@ start_transcription.onclick = function() {
     eventSource.onmessage = function(event) {
         
         //console.log("Response :", event.data);
+
         // replace '' by "" in event.data string
         const data = JSON.parse(event.data.replace(/'/g, "\""));
         const frame_id = data.frame_id;
         frame_received += 1;
-        const answer = data.answer;
+        const answer = data.answer.replace("&&guillemetsimple&&", "'").replace("&&guillemetdouble&&", '"');
         const frameTime = frame_id / fps;
         const hours = Math.floor(frameTime / 3600);
         const minutes = Math.floor((frameTime % 3600) / 60);

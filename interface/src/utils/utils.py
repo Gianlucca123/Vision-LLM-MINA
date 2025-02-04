@@ -99,4 +99,6 @@ def test_yield():
         if name == "":
             name = "0"
 
-        yield f"data: {dict(frame_id = name, answer = "This is the answer number " + str(i))}\n\n"
+        answer = 'This is the answer number \"dlfk\"  ' + str(i)
+        answer = answer.replace("'", "").replace('"', "")
+        yield f"data: {dict(frame_id = name, answer = answer)}\n\n"
