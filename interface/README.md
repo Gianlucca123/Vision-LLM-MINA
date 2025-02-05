@@ -28,12 +28,14 @@ Then, open your web browser and navigate to [http://127.0.0.1:5000/](http://127.
 
 ## Usage
 
-1. Place a video file in the `interface/data/videos/` folder.
-2. Select the video file within the interface in your web browser.
-3. Select a frame rate to analyze images.
-4. Click "Start Transcription" and wait for the frame description to complete.
+
+1. Select a video file within the interface in your web browser.
+2. Select a frame rate to analyze images.
+3. Click "Start Transcription" and wait for the frame description to complete.
 
 Enjoy using the interface for your video analysis tasks!
+
+Additionally, a log file is generated in `interface/data/logs/`.
 
 ## Version
 
