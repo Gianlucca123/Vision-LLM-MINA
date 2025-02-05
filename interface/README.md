@@ -34,3 +34,7 @@ Then, open your web browser and navigate to [http://127.0.0.1:5000/](http://127.
 4. Click "Start Transcription" and wait for the frame description to complete.
 
 Enjoy using the interface for your video analysis tasks!
+
+## Version
+
+v1.1
