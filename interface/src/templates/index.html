@@ -21,7 +21,8 @@
             </div>
             <div class="mb-4">
                 <label class="block font-medium">Analysis frame rate (frames per minute)</label>
-                <input type="number" class="w-full p-2 border rounded mt-1" id="frame-rate-input" value="6">
+                <input type="number" class="w-full p-2 border rounded mt-1" id="frame-rate-input" value="6"/>
+                <p class="text-xs text-red-500" id="warning-message-analysis-frame-rate"></p>
             </div>
             <div class="mb-4">
                 <label class="block text-sm">Total frames to analyze : </label>
@@ -34,9 +35,10 @@
             <div class="mb-4 pb-4">
                 <label class="block font-medium">Max Token Length per image</label>
                 <input type="number" class="w-full p-2 border rounded mt-1" id="max-token-length-input" value="1024">
+                <p class="text-xs text-red-500" id="warning-message-max-token"></p>
             </div>
 
-            <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer" id="start-transcription">Start Transcription</button>
+            <button disabled class="w-full bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-300 text-white p-2 rounded hover:bg-blue-600 cursor-pointer" id="start-transcription">Start Transcription</button>
         </div>
         
         <!-- Main Content -->

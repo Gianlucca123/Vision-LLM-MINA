@@ -7,18 +7,22 @@ from transformers import AutoModel, AutoTokenizer
 IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
 
+
 def build_transform(input_size):
     MEAN, STD = IMAGENET_MEAN, IMAGENET_STD
-    transform = T.Compose([
-        T.Lambda(lambda img: img.convert('RGB') if img.mode != 'RGB' else img),
-        T.Resize((input_size, input_size), interpolation=InterpolationMode.BICUBIC),
-        T.ToTensor(),
-        T.Normalize(mean=MEAN, std=STD)
-    ])
+    transform = T.Compose(
+        [
+            T.Lambda(lambda img: img.convert("RGB") if img.mode != "RGB" else img),
+            T.Resize((input_size, input_size), interpolation=InterpolationMode.BICUBIC),
+            T.ToTensor(),
+            T.Normalize(mean=MEAN, std=STD),
+        ]
+    )
     return transform
 
+
 def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_size):
-    best_ratio_diff = float('inf')
+    best_ratio_diff = float("inf")
     best_ratio = (1, 1)
     area = width * height
     for ratio in target_ratios:
@@ -32,19 +36,27 @@ def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_
                 best_ratio = ratio
     return best_ratio
 
-def dynamic_preprocess(image, min_num=1, max_num=12, image_size=448, use_thumbnail=False):
+
+def dynamic_preprocess(
+    image, min_num=1, max_num=12, image_size=448, use_thumbnail=False
+):
     orig_width, orig_height = image.size
     aspect_ratio = orig_width / orig_height
 
     # calculate the existing image aspect ratio
     target_ratios = set(
-        (i, j) for n in range(min_num, max_num + 1) for i in range(1, n + 1) for j in range(1, n + 1) if
-        i * j <= max_num and i * j >= min_num)
+        (i, j)
+        for n in range(min_num, max_num + 1)
+        for i in range(1, n + 1)
+        for j in range(1, n + 1)
+        if i * j <= max_num and i * j >= min_num
+    )
     target_ratios = sorted(target_ratios, key=lambda x: x[0] * x[1])
 
     # find the closest aspect ratio to the target
     target_aspect_ratio = find_closest_aspect_ratio(
-        aspect_ratio, target_ratios, orig_width, orig_height, image_size)
+        aspect_ratio, target_ratios, orig_width, orig_height, image_size
+    )
 
     # calculate the target width and height
     target_width = image_size * target_aspect_ratio[0]
@@ -59,7 +71,7 @@ def dynamic_preprocess(image, min_num=1, max_num=12, image_size=448, use_thumbna
             (i % (target_width // image_size)) * image_size,
             (i // (target_width // image_size)) * image_size,
             ((i % (target_width // image_size)) + 1) * image_size,
-            ((i // (target_width // image_size)) + 1) * image_size
+            ((i // (target_width // image_size)) + 1) * image_size,
         )
         # split the image
         split_img = resized_img.crop(box)
@@ -70,24 +82,36 @@ def dynamic_preprocess(image, min_num=1, max_num=12, image_size=448, use_thumbna
         processed_images.append(thumbnail_img)
     return processed_images
 
+
 def load_image(image, input_size=448, max_num=12):
-    #image = Image.open(image_file).convert('RGB')
+    # image = Image.open(image_file).convert('RGB')
     transform = build_transform(input_size=input_size)
-    images = dynamic_preprocess(image, image_size=input_size, use_thumbnail=True, max_num=max_num)
+    images = dynamic_preprocess(
+        image, image_size=input_size, use_thumbnail=True, max_num=max_num
+    )
     pixel_values = [transform(image) for image in images]
     pixel_values = torch.stack(pixel_values)
     return pixel_values
 
+
 def open_InternVL2_1B():
-    path = 'OpenGVLab/InternVL2-1B'
-    model = AutoModel.from_pretrained(
-        path,
-        torch_dtype=torch.bfloat16,
-        low_cpu_mem_usage=True,
-        use_flash_attn=True,
-        trust_remote_code=True).eval().cuda()
-    tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True, use_fast=False)
+    path = "OpenGVLab/InternVL2-1B"
+    model = (
+        AutoModel.from_pretrained(
+            path,
+            torch_dtype=torch.bfloat16,
+            low_cpu_mem_usage=True,
+            use_flash_attn=True,
+            trust_remote_code=True,
+        )
+        .eval()
+        .cuda()
+    )
+    tokenizer = AutoTokenizer.from_pretrained(
+        path, trust_remote_code=True, use_fast=False
+    )
     return model, tokenizer
+
 
 def questionInternVL2_1B(question, model, tokenizer, image, max_token_length):
     # set the max number of tiles in `max_num`
