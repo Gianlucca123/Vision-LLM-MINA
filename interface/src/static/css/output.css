@@ -536,6 +536,9 @@
   .fixed {
     position: fixed;
   }
+  .fixed\! {
+    position: fixed !important;
+  }
   .relative {
     position: relative;
   }
@@ -612,6 +615,24 @@
     }
     @media (width >= 96rem) {
       max-width: 96rem;
+    }
+  }
+  .container\! {
+    width: 100% !important;
+    @media (width >= 40rem) {
+      max-width: 40rem !important;
+    }
+    @media (width >= 48rem) {
+      max-width: 48rem !important;
+    }
+    @media (width >= 64rem) {
+      max-width: 64rem !important;
+    }
+    @media (width >= 80rem) {
+      max-width: 80rem !important;
+    }
+    @media (width >= 96rem) {
+      max-width: 96rem !important;
     }
   }
   .-m-1 {
@@ -851,6 +872,9 @@
   .p-8 {
     padding: calc(var(--spacing) * 8);
   }
+  .p-\[��D��\4 �jQ���d�\}AR\14 ��\$�\] {
+    padding: ��D���jQ���d�}AR��$�;
+  }
   .px-1 {
     padding-inline: calc(var(--spacing) * 1);
   }
@@ -1008,6 +1032,40 @@
   .ease-in-out {
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
+  }
+  .\[-1\:1\] {
+    -1: 1;
+  }
+  .\[-8\:-4\] {
+    -8: -4;
+  }
+  .\[-10\:-1\] {
+    -10: -1;
+  }
+  .\[flat_start\:flat_end\] {
+    flat_start: flat end;
+  }
+  .\[i\:j\] {
+    i: j;
+  }
+  .\[m\:n\] {
+    m: n;
+  }
+  .\[passage_offset\:sequence_len\] {
+    passage_offset: sequence len;
+  }
+  .\[start\:end\] {
+    start: end;
+  }
+  .\[val1\:val2\] {
+    val1: val2;
+  }
+  .hover\:border-blue-500 {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-blue-500);
+      }
+    }
   }
   .hover\:bg-blue-600 {
     &:hover {

@@ -3,9 +3,10 @@ from PIL import Image
 import os
 import torch
 import markdown
+from datetime import datetime, timezone
+from utils.logs import write_logs
 
-
-def get_answer_InternVL2_1B(cache_path, prompt, max_token_length):
+def get_answer_InternVL2_1B(cache_path, prompt, max_token_length, log_file_path, fps):
     """
     @brief Generates answers using the InternVL2-1B model for images in the cache directory.
     This function loads the InternVL2-1B model and tokenizer, iterates over all image files in the specified cache directory,
@@ -31,6 +32,15 @@ def get_answer_InternVL2_1B(cache_path, prompt, max_token_length):
         name = name[:-4].lstrip("0")
         if name == "":
             name = "0"
+
+        # compute the timestamp using int(name)
+        timestamp = int(name) / fps
+        timestamp = str(
+            datetime.fromtimestamp(timestamp, timezone.utc).strftime("%H:%M:%S")
+        )
+
+        # write the answer to the logs
+        write_logs(answer, timestamp, name, log_file_path)
 
         answer = answer.replace("'", "guillemetsimple").replace('"', "guillemetdouble")
         answer = markdown.markdown(answer)

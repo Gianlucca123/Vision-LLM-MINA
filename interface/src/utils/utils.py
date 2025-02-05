@@ -5,7 +5,8 @@ from utils.callModel import get_answer_InternVL2_1B
 from time import sleep
 from werkzeug.utils import secure_filename
 import os
-from datetime import datetime
+from datetime import datetime, timezone
+from utils.logs import define_log_file, write_logs
 
 
 def retrieve_video_file(video_file, video_folder_path):
@@ -120,15 +121,18 @@ def compute_transcription(
     # release the video capture object
     cap.release()
 
+    # define a log file for the transcription
+    log_file_path = define_log_file()
+
     # get the answer for the InternVL2_1B model
-    answers = get_answer_InternVL2_1B(cached_images_dir, prompt, max_token_length)
-    #answers = test_yield()
+    answers = get_answer_InternVL2_1B(cached_images_dir, prompt, max_token_length, log_file_path, fps)
+    #answers = test_yield(log_file_path, fps)
 
     return answers
 
 
 # test function to simulate the yield
-def test_yield():
+def test_yield(log_file_path, fps):
     """
     @brief Generator function that yields formatted data from files in a cache directory.
     This function iterates over files in the specified cache directory, processes each file name,
@@ -149,19 +153,15 @@ def test_yield():
 
         answer = 'This is the answer number "dlfk"  ' + str(i)
         answer = answer.replace("'", "").replace('"', "")
+
+        # compute the timestamp using int(name)
+        timestamp = int(name) / fps
+        timestamp = str(
+            datetime.fromtimestamp(timestamp, timezone.utc).strftime("%H:%M:%S")
+        )
+
+        # write the answer to the logs
+        write_logs(answer, timestamp, name, log_file_path)
+
         yield f"data: {dict(frame_id=name, answer=answer)}\n\n"
 
-"""
-def write_logs(answers):
-    log_path = "interface/data/logs"
-    if not os.path.exists(log_path):
-        os.makedirs(log_path)
-
-    # define a file name for the log file containing the timestamp
-    log_file_name = f"transcription_log_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-
-    # write the answers to a log file
-    log_file_path = os.path.join(log_path, log_file_name)
-    with open(log_file_path, "w") as log_file:
-        log_file.write(f"{answers}")
-"""
