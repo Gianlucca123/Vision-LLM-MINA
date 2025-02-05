@@ -6,7 +6,7 @@ from deepseek_vl.utils.io import load_pil_images
 
 
 # specify the path to the model
-model_path = "deepseek-ai/deepseek-vl-1.3b-base"
+model_path = "deepseek-ai/deepseek-vl-1.3b-chat"
 vl_chat_processor: VLChatProcessor = VLChatProcessor.from_pretrained(model_path)
 tokenizer = vl_chat_processor.tokenizer
 
