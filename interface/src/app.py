@@ -89,7 +89,8 @@ def qa_answer():
     if not prompt:
         return jsonify({"message": "No prompt provided"}), 400
     answer = askQwen25(prompt)
-    #answer = "This is a test answer."
+    while answer is None:
+        continue
     return jsonify({"answer": answer})
 
 

@@ -53,9 +53,9 @@ send_button.addEventListener('click', async function() {
         var context = "The following is a sequence of frame descriptions of a video. ================================================================================================================================== \n START OF VIDEO \n ";
         var file = await load_transcription.files[0].text();
         console.log(file);
-        var pre_prompt = " \n END OF VIDEO \n ================================================================================================================================== \n You are an expert AI that can answer questions about the text you have read. Based on the text you just read, answer the following question: ";
+        var pre_prompt = " \n END OF VIDEO \n ================================================================================================================================== \n You are an expert AI that can answer questions about the text you have read. Based on the text you just read, answer the last question. \n ";
         var post_question = " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: ";
-        var prompt = context + file + pre_prompt + question + post_question + thread;
+        var prompt = context + file + pre_prompt + thread + post_question;
         console.log(prompt);
         
         // fetch the answer from the server (send prompt to the server)
