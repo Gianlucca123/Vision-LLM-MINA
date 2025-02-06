@@ -23,6 +23,7 @@ total_frames_to_be_analyzed = document.getElementById('total-frames-to-be-analyz
 start_transcription = document.getElementById('start-transcription')
 main_content = document.getElementById('main-content')
 loading_container = document.getElementById('loading-container')
+loading_container_title = document.getElementById('loading-container-title')
 loading_bar = document.getElementById('loading-bar')
 loading_percentage = document.getElementById('loading-percentage')
 generated_frames = document.getElementById('generated-frames')
@@ -109,6 +110,10 @@ function compute_total_frames_to_analyze() {
         warning_message_analysis_frame_rate.textContent = "Warning: the frame rate must be positive.";
         warning_analysis_frame_rate_bool = true;
         manage_start_transcription_button_availability()
+    } else if (frame_rate > 120) {
+        warning_message_analysis_frame_rate.textContent = "Warning: the frame rate is too high.";
+        warning_analysis_frame_rate_bool = true;
+        manage_start_transcription_button_availability()
     }
 }
 
@@ -158,12 +163,27 @@ start_transcription.onclick = function() {
     prompt = prompt_input.value;
     max_token_length = max_token_length_input.value;
 
+    // Reset the loading bar
+    loading_container_title.innerHTML = "Loading...";
+    loading_container.classList.add("cursor-progress");
+    loading_container.classList.remove("cursor-default");
+    loading_bar.style.width = "0%";
+    loading_bar.classList.remove("bg-green-500");
+    loading_bar.classList.add("bg-blue-500");
+    loading_percentage.innerHTML = "0%";
+    
+    // Remove the old content of the main content from the second child
+    while (main_content.children.length > 1) {
+        main_content.removeChild(main_content.lastChild);
+    }
+
     // Define the url for the event source
     const url = `/start-transcription?video_file_name=${encodeURIComponent(video_file_name)}&frame_rate=${encodeURIComponent(frame_rate)}&prompt=${encodeURIComponent(prompt)}&max_token_length=${encodeURIComponent(max_token_length)}`;
 
     // Create the event source
     const eventSource = new EventSource(url);
     eventSource.onmessage = function(event) {
+        
         // replace '' by "" in event.data string
         const data = JSON.parse(event.data.replace(/'/g, "\""));
         const frame_id = data.frame_id;
@@ -211,7 +231,12 @@ start_transcription.onclick = function() {
         // Close the event source if the percentage is 100
         if (percentage == 100) {
             eventSource.close();
-            loading_container.style.display = 'none';
+            //loading_container.style.display = 'none';
+            loading_container_title.innerHTML = "Transcription completed";
+            loading_container.classList.remove("cursor-progress");
+            loading_container.classList.add("cursor-default");
+            loading_bar.classList.remove("bg-blue-500");
+            loading_bar.classList.add("bg-green-500");
         }
     };
     // Close the event source if an error occurs

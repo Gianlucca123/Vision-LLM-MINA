@@ -4,6 +4,7 @@ from utils.utils import (
     compute_transcription,
     test_yield,
     retrieve_video_file,
+    askQwen25,
 )
 
 app = Flask(__name__)
@@ -73,6 +74,20 @@ def start_transcription():
         ),
         mimetype="text/event-stream",
     )
+
+
+# Q&A route
+@app.route("/qa", methods=["GET"])
+def qa():
+    return render_template("qa.html")
+
+
+# Q&A answer route
+@app.route("/qa-answer", methods=["POST"])
+def qa_answer():
+    prompt = request.form["prompt"]
+    answer = askQwen25(prompt)
+    return jsonify({"answer": answer})
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 import os
 from datetime import datetime, timezone
 from utils.logs import define_log_file, write_logs
+from utils.question_answering.Qwen25 import questionQwen, open_Qwen05, open_Qwen15, clean_cuda
 
 
 def retrieve_video_file(video_file, video_folder_path):
@@ -125,8 +126,8 @@ def compute_transcription(
     log_file_path = define_log_file()
 
     # get the answer for the InternVL2_1B model
-    answers = get_answer_InternVL2_1B(cached_images_dir, prompt, max_token_length, log_file_path, fps)
-    #answers = test_yield(log_file_path, fps)
+    #answers = get_answer_InternVL2_1B(cached_images_dir, prompt, max_token_length, log_file_path, fps)
+    answers = test_yield(log_file_path, fps)
 
     return answers
 
@@ -165,3 +166,8 @@ def test_yield(log_file_path, fps):
 
         yield f"data: {dict(frame_id=name, answer=answer)}\n\n"
 
+def askQwen25(prompt):
+    tokenizer,model=open_Qwen05()
+    answer = questionQwen(prompt,tokenizer,model)
+    clean_cuda()
+    return answer
