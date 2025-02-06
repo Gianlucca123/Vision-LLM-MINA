@@ -85,8 +85,11 @@ def qa():
 # Q&A answer route
 @app.route("/qa-answer", methods=["POST"])
 def qa_answer():
-    prompt = request.form["prompt"]
+    prompt = request.json.get("prompt")
+    if not prompt:
+        return jsonify({"message": "No prompt provided"}), 400
     answer = askQwen25(prompt)
+    #answer = "This is a test answer."
     return jsonify({"answer": answer})
 
 
