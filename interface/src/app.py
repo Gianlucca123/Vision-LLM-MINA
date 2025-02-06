@@ -91,6 +91,9 @@ def qa_answer():
     answer = askQwen25(prompt)
     while answer is None:
         continue
+    # keep only the answer after " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: "
+    answer = answer.split(" Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: ")[1]
+
     return jsonify({"answer": answer})
 
 
