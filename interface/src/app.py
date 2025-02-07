@@ -107,7 +107,7 @@ def qa_answer():
     # keep only the answer after " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: "
     #try:
     answer = answer.split(
-            " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: "
+            " \n Use only fact from the text you have read. Be short and concise. Use end of token after the answer. \n \n \n Your answer to the question is: "
         )[1]
     answer = markdown.markdown(answer)
     #except IndexError:
