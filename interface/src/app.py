@@ -93,12 +93,12 @@ def qa_answer():
     while answer is None:
         continue
     # keep only the answer after " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: "
-    try:
-        answer = answer.split(
+    #try:
+    answer = answer.split(
             " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: "
         )[1]
-    except IndexError:
-        answer = "I am sorry, but I could not find an answer to your question."
+    #except IndexError:
+    #    answer = "I am sorry, but I could not find an answer to your question."
 
     return jsonify({"answer": answer})
 
