@@ -51,7 +51,8 @@ async function send_message() {
         var questionText = document.createElement('p');
         questionText.className = 'text-gray-600';
         questionText.textContent = question;
-        thread += " Question from the user: " + question;
+        //thread += " Question from the user: " + question;
+        thread = " Question from the user: " + question;
 
         // append sender name and question text to question element
         questionElement.appendChild(senderName);
@@ -116,7 +117,7 @@ async function send_message() {
         }).then(response => response.json())
         .then(function(data) {
             // create new answer element
-            thread += " Answer from the AI: " + data.answer;
+            //thread += " Answer from the AI: " + data.answer;
             console.log(data.answer);
 
             // create new answer element
