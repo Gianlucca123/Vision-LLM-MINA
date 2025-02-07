@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{url_for('static',filename='css/output.css')}}" rel="stylesheet">
+    <title>Video Transcription</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-4">
+        <!-- Sidebar -->
+        <div class="md:col-span-1">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="mb-4">
+                    <label class="block font-medium mb-2">Video</label>
+                    <input type="file" class="w-full p-2 border rounded cursor-pointer" accept="video/*" id="load-video">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm" id="video-length-label">Video length : </label>
+                    <label class="block text-sm" id="video-frame-rate-label">Fps : </label>
+                    <label class="block text-sm" id="total-frames-label">Total frames : </label>
+                </div>
+                <div class="mb-4">
+                    <label class="block font-medium">Analysis frame rate (frames per minute)</label>
+                    <input type="number" class="w-full p-2 border rounded mt-1" id="frame-rate-input" value="6"/>
+                    <p class="text-xs text-red-500" id="warning-message-analysis-frame-rate"></p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm">Total frames to analyze : </label>
+                    <label class="block text-sm font-bold pt-1 text-center" id="total-frames-to-be-analyzed">0 frames</label>
+                </div>
+                <div class="mb-4">
+                    <label class="block font-medium">Prompt</label>
+                    <textarea class="w-full p-2 border rounded mt-1" id="prompt-input" rows="4">You are an expert at analyzing real world images. Describe all you see on this picture.</textarea>
+                </div>
+                <div class="mb-4 pb-4">
+                    <label class="block font-medium">Max Token Length per image</label>
+                    <input type="number" class="w-full p-2 border rounded mt-1" id="max-token-length-input" value="1024">
+                    <p class="text-xs text-red-500" id="warning-message-max-token"></p>
+                </div>
+                <button disabled class="w-full bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-300 text-white p-2 rounded hover:bg-blue-600 cursor-pointer" id="start-transcription">Start Transcription</button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md mt-5">
+                <label class="mb-4 block font-medium">Question & Answering</label>
+                <div class="w-full">
+                    <a class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer block text-center" href="/qa">Switch to Q&A mode</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="md:col-span-3 space-y-4" id = "main-content">
+            <!--div class="bg-white p-4 rounded-lg shadow-md">
+                <p class="text-gray-700 font-semibold">Frame number X</p>
+                <p class="text-gray-500 text-sm pb-5">00:00:00</p>
+                <p class="text-gray-600">bla bla bla bla bla bla bla</p>
+            </div-->
+            <div class="bg-white p-4 rounded-lg shadow-md hidden cursor-progress" id="loading-container">
+                <p class="text-gray-700 font-semibold" id="loading-container-title">Loading...</p>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+                    <div class="bg-blue-500 h-4 rounded-full transition-all duration-500" id="loading-bar" style="width: 0%;"></div>
+                </div>
+                    <p class="text-gray-500 text-sm" id="loading-percentage">0%</p>
+                    <p class="text-gray-600 text-sm" id="generated-frames">0 / 0 frames</p>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{url_for('static',filename='js/index-script.js')}}"></script>
+</body>
+</html>
