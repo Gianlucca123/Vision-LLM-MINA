@@ -4,13 +4,13 @@ from utils.utils import (
     compute_transcription,
     test_yield,
     retrieve_video_file,
-    askQwen25,
 )
+from utils.question_answering.Qwen25 import questionQwen, open_Qwen05
 import markdown
 
 app = Flask(__name__)
 app.config["video_folder_path"] = "interface/data/videos/"
-
+app.config["is_Qwen_open"] = False
 
 # Home route
 @app.route("/")
@@ -89,7 +89,18 @@ def qa_answer():
     prompt = request.json.get("prompt")
     if not prompt:
         return jsonify({"message": "No prompt provided"}), 400
-    answer = askQwen25(prompt)
+    
+    # Load the model if it is not already open
+    if not app.config["is_Qwen_open"]:
+        tokenizer,model=open_Qwen05()
+        app.config["Qwen_tokenizer"]=tokenizer
+        app.config["Qwen_model"]=model
+        app.config["is_Qwen_open"] = True
+    else:
+        tokenizer = app.config["Qwen_tokenizer"]
+        model = app.config["Qwen_model"]
+
+    answer = questionQwen(prompt,tokenizer,model)
     #answer = "I don't know"
     while answer is None:
         continue
