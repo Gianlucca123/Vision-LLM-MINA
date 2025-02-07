@@ -86,6 +86,14 @@ def qa():
 # Q&A answer route
 @app.route("/qa-answer", methods=["POST"])
 def qa_answer():
+    """
+    @brief Handles the QA (Question Answering) request and returns the answer.
+    This function processes a JSON request containing a prompt, loads the Qwen model if not already loaded,
+    generates an answer using the model, and returns the answer in a JSON response.
+    @return JSON response containing the answer or an error message if no prompt is provided.
+    @note The function expects the request to contain a JSON object with a "prompt" key.
+    """
+
     prompt = request.json.get("prompt")
     if not prompt:
         return jsonify({"message": "No prompt provided"}), 400
@@ -104,7 +112,6 @@ def qa_answer():
     #answer = "I don't know"
     while answer is None:
         continue
-    # keep only the answer after " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: "
     #try:
     answer = answer.split(
             " \n Use only fact from the text you have read. Be short and concise. Use end of token after the answer. \n \n \n Your answer to the question is: "

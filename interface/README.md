@@ -28,15 +28,24 @@ Then, open your web browser and navigate to [http://127.0.0.1:5000/](http://127.
 
 ## Usage
 
+### Video transcription mode
 
 1. Select a video file within the interface in your web browser.
-2. Select a frame rate to analyze images.
+2. Select a frame rate to analyze images (up to 120 frames per minute). Note, a warning may appear if you request to analyze more frames than are available in the total video.
 3. Click "Start Transcription" and wait for the frame description to complete.
 
 Enjoy using the interface for your video analysis tasks!
 
-Additionally, a log file is generated in `interface/data/logs/`.
+Additionally, a log file is generated in `interface/data/logs/` containing the frame numbers, timestamps and transcriptions.
 
-## Version
+### Question & Answering mode
 
-v1.1
+1. Load the log file generated from the video transcription mode.
+2. Enter your question.
+3. Wait for the model to provide an answer.
+
+We use the Qwen model with 500 million parameters. The maximum context length is approximately 32,000 tokens. Each query to the Qwen model includes the transcription, the question, and a pre-prompt. Ensure the combined input is within the 32,000 token limit to provide complete information to the model.
+
+Note that each query is independent, and previous questions and answers are not included in subsequent queries.
+
+In `Qwen25.py`, there is a parameter `max_new_tokens=100`. We have capped it to 100 to get answers quickly (as fewer tokens need to be generated), but you can change it.

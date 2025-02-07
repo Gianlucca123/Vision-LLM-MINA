@@ -165,9 +165,3 @@ def test_yield(log_file_path, fps):
         write_logs(answer, timestamp, name, log_file_path)
 
         yield f"data: {dict(frame_id=name, answer=answer)}\n\n"
-
-def askQwen25(prompt):
-    tokenizer,model=open_Qwen05()
-    answer = questionQwen(prompt,tokenizer,model)
-    clean_cuda(model, tokenizer)
-    return answer
