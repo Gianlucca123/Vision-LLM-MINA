@@ -17,7 +17,7 @@ def questionQwen(prompt, tokenizer, model):
     input_ids = inputs.input_ids.to("cuda")
     attention_mask = inputs.attention_mask.to("cuda")  # <- Explicitly create attention mask
 
-    outputs = model.generate(input_ids, attention_mask=attention_mask, max_length=32768)
+    outputs = model.generate(input_ids, attention_mask=attention_mask, max_new_tokens=2000)
 
     answer = tokenizer.decode(outputs[0], skip_special_tokens=True)
 

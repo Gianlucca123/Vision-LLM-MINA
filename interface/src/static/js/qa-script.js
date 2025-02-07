@@ -138,7 +138,7 @@ async function send_message() {
             // create answer text element
             var answerText = document.createElement('p');
             answerText.className = 'text-gray-600';
-            answerText.textContent = data.answer;
+            answerText.innerHTML = data.answer;
 
             // append bot name and answer text to answer element
             answerElement.appendChild(botName);
@@ -190,7 +190,5 @@ function remove_loading_element() {
     var lastElement = main_content.lastElementChild;
 
     // remove the last element if it is a loading element
-    if (lastElement.textContent === 'Thinking...') {
-        main_content.removeChild(lastElement);
-    }
+    main_content.removeChild(lastElement);
 }
