@@ -88,8 +88,8 @@ def qa_answer():
     prompt = request.json.get("prompt")
     if not prompt:
         return jsonify({"message": "No prompt provided"}), 400
-    # answer = askQwen25(prompt)
-    answer = "I don't know"
+    answer = askQwen25(prompt)
+    #answer = "I don't know"
     while answer is None:
         continue
     # keep only the answer after " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: "
