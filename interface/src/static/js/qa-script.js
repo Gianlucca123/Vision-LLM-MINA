@@ -13,7 +13,26 @@ var load_transcription = document.getElementById('load-transcription');
 var thread = "";
 
 // add click event listener to send-button
-send_button.addEventListener('click', async function() {
+send_button.addEventListener('click', send_message);
+
+// add event on keypress to question-input and send message if key is enter
+question_input.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        send_message();
+    }
+});
+
+// add event on change to question-input and enable send-button if input is not empty
+question_input.addEventListener('input', function() {
+    if (question_input.value.trim() !== '') {
+        send_button.disabled = false;
+    } else {
+        send_button.disabled = true;
+    }
+});
+
+// define send_message function
+async function send_message() {
     // get question from question-input
     var question = question_input.value;
 
@@ -50,8 +69,35 @@ send_button.addEventListener('click', async function() {
         // define prompt :
 
         // get the text from the text file input
-        var context = "The following is a sequence of frame descriptions of a video. ================================================================================================================================== \n START OF VIDEO \n ";
+        // first check if a file is selected
+        if (load_transcription.files.length === 0) {
+            // create new answer element
+            var answerElement = document.createElement('div');
+            answerElement.className = 'bg-blue-100 p-4 rounded-lg shadow-md self-start mr-auto max-w-lg';
+
+            // create bot name element
+            var botName = document.createElement('p');
+            botName.className = 'text-gray-700 font-semibold';
+            botName.textContent = 'Philippe';
+
+            // create answer text element
+            var answerText = document.createElement('p');
+            answerText.className = 'text-red-500';
+            answerText.textContent = "Please upload a transcription file before asking a question.";
+
+            // append bot name and answer text to answer element
+            answerElement.appendChild(botName);
+            answerElement.appendChild(answerText);
+
+            // append answer element to main content
+            main_content.appendChild(answerElement);
+
+            // enable send-button
+            send_button.disabled = false;
+            return;
+        }
         var file = await load_transcription.files[0].text();
+        var context = "The following is a sequence of frame descriptions of a video. ================================================================================================================================== \n START OF VIDEO \n ";
         console.log(file);
         var pre_prompt = " \n END OF VIDEO \n ================================================================================================================================== \n You are an expert AI that can answer questions about the text you have read. Based on the text you just read, answer the last question. \n ";
         var post_question = " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: ";
@@ -80,7 +126,7 @@ send_button.addEventListener('click', async function() {
             // create bot name element
             var botName = document.createElement('p');
             botName.className = 'text-gray-700 font-semibold';
-            botName.textContent = 'Bot';
+            botName.textContent = 'Philippe';
 
             // create answer text element
             var answerText = document.createElement('p');
@@ -100,15 +146,4 @@ send_button.addEventListener('click', async function() {
         }).catch(error => console.error('Error:', error));
 
     }
-});
-
-// add event on change to question-input and enable send-button if input is not empty
-question_input.addEventListener('input', function() {
-    if (question_input.value.trim() !== '') {
-        send_button.disabled = false;
-    } else {
-        send_button.disabled = true;
-    }
-});
-
-
+}

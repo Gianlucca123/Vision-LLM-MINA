@@ -126,8 +126,8 @@ def compute_transcription(
     log_file_path = define_log_file()
 
     # get the answer for the InternVL2_1B model
-    #answers = get_answer_InternVL2_1B(cached_images_dir, prompt, max_token_length, log_file_path, fps)
-    answers = test_yield(log_file_path, fps)
+    answers = get_answer_InternVL2_1B(cached_images_dir, prompt, max_token_length, log_file_path, fps)
+    #answers = test_yield(log_file_path, fps)
 
     return answers
 
