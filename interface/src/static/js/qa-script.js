@@ -17,7 +17,7 @@ send_button.addEventListener('click', send_message);
 
 // add event on keypress to question-input and send message if key is enter
 question_input.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && send_button.disabled === false) {
         send_message();
     }
 });
@@ -99,11 +99,14 @@ async function send_message() {
         }
         var file = await load_transcription.files[0].text();
         var context = "The following is a sequence of frame descriptions of a video. ================================================================================================================================== \n START OF VIDEO \n ";
-        console.log(file);
+        //console.log(file);
         var pre_prompt = " \n END OF VIDEO \n ================================================================================================================================== \n You are an expert AI that can answer questions about the text you have read. Based on the text you just read, answer the last question. \n ";
         var post_question = " Use only fact from the text you have read, if you cannot find the answer, say 'I don't know'. The answer to the question is: ";
         var prompt = context + file + pre_prompt + thread + post_question;
-        console.log(prompt);
+        //console.log(prompt);
+
+        // create a loading element
+        create_loading_element();
         
         // fetch the answer from the server (send prompt to the server)
         fetch('/qa-answer', {
@@ -116,6 +119,9 @@ async function send_message() {
             }),
         }).then(response => response.json())
         .then(function(data) {
+            // remove the loading element
+            remove_loading_element();
+
             // create new answer element
             //thread += " Answer from the AI: " + data.answer;
             console.log(data.answer);
@@ -146,5 +152,45 @@ async function send_message() {
 
         }).catch(error => console.error('Error:', error));
 
+    }
+}
+
+// function to create a loading element
+function create_loading_element() {
+    // create new loading element
+    var loadingElement = document.createElement('div');
+    loadingElement.className = 'bg-blue-100 p-4 rounded-lg shadow-md self-start mr-auto max-w-lg flex items-center';
+
+    // create bot name element
+    var botName = document.createElement('p');
+    botName.className = 'text-gray-700 font-semibold';
+    botName.textContent = 'Philippe';
+
+    // create loading text element
+    var loadingText = document.createElement('p');
+    loadingText.className = 'text-gray-600 ml-2';
+    loadingText.textContent = 'Thinking...';
+
+    // create loading spinner element
+    var spinner = document.createElement('div');
+    spinner.className = 'loader ml-2';
+
+    // append bot name, loading text, and spinner to loading element
+    loadingElement.appendChild(botName);
+    loadingElement.appendChild(loadingText);
+    loadingElement.appendChild(spinner);
+
+    // append loading element to main content
+    main_content.appendChild(loadingElement);
+}
+
+// function to remove a loading element
+function remove_loading_element() {
+    // get the last element in main content
+    var lastElement = main_content.lastElementChild;
+
+    // remove the last element if it is a loading element
+    if (lastElement.textContent === 'Thinking...') {
+        main_content.removeChild(lastElement);
     }
 }

@@ -49,3 +49,6 @@ def get_answer_InternVL2_1B(cache_path, prompt, max_token_length, log_file_path,
 
     # clear the cache
     torch.cuda.empty_cache()
+    torch.cuda.ipc_collect()
+    del model_InternVL2
+    del tokenizer_InternVL2

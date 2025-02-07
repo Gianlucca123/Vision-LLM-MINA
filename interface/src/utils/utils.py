@@ -169,5 +169,5 @@ def test_yield(log_file_path, fps):
 def askQwen25(prompt):
     tokenizer,model=open_Qwen05()
     answer = questionQwen(prompt,tokenizer,model)
-    clean_cuda()
+    clean_cuda(model, tokenizer)
     return answer

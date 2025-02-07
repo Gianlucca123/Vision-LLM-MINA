@@ -23,7 +23,10 @@ def questionQwen(prompt, tokenizer, model):
 
     return answer
 
-def clean_cuda():
+def clean_cuda(model, tokenizer):
     # Vider le cache GPU
     torch.cuda.empty_cache()
     torch.cuda.ipc_collect()
+    del model
+    del tokenizer
+    
