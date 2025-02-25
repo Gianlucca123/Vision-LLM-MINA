@@ -1,30 +1,43 @@
-## Installation et lancement de VILA
-Ce README concerne l'installation et le lancement de VILA sur la carte Jetson Orin Nano
+# Installation et Lancement de VILA
 
-Nous avons utilisé le tutoriel du lab nvidia pour réaliser cette installation : TODO LIEN
+Ce guide explique comment installer et lancer **VILA** sur la carte **Jetson Orin Nano**.
 
-1. Installation de NanoLLM et VILA
-???
-'''bash
-jetson-containers run $(autotag nano_llm) \
-  python3 -m nano_llm.chat --api=mlc \
-'''
+Nous avons suivi le tutoriel du laboratoire NVIDIA pour réaliser cette installation : [https://www.jetson-ai-lab.com/tutorial_nano-vlm.html](#)
 
-2. Questionner VILA sur une image
+## 1. Installation de NanoLLM et VILA
 
-Il est important de noter que les images doivent se trouver dans le répertoir jetson-containers/data/images/.
+Exécutez la commande suivante pour installer et exécuter **NanoLLM** et **VILA** :
 
-'''bash
+```bash
 jetson-containers run $(autotag nano_llm) \
   python3 -m nano_llm.chat --api=mlc \
     --model Efficient-Large-Model/VILA1.5-3b \
     --max-context-len 64 \
     --max-new-tokens 32
-'''
+```
+Après installation, le modèle VILA sera automatiquement lancé et vous pourrez le questionner.
 
+## 2. Questionner VILA sur une image
 
-Il est possible de préparer les prompts en avance comme suit :
-'''bash
+**Remarque :** Les images doivent être placées dans le répertoire `jetson-containers/data/images/`.
+
+Pour lui poser des questions, écrire dans l'interface ouverte après lancement :
+```bash
+>> PROMPT: /data/images/mon_image.png
+
+>> PROMPT: Je pose ma question ici.
+```
+
+N'hésitez pas à réinitialiser le questionnement pour fournir une autre image ou éviter que le modèle ne se base sur ses réponses précédentes à l'aide de **reset** :
+```bash
+>> PROMPT: reset
+```
+
+### Préparer des prompts en avance
+
+Vous pouvez structurer vos questions en amont comme suit :
+
+```bash
 jetson-containers run $(autotag nano_llm) \
   python3 -m nano_llm.chat --api=mlc \
     --model Efficient-Large-Model/VILA1.5-3b \
@@ -37,13 +50,15 @@ jetson-containers run $(autotag nano_llm) \
     --prompt '/data/images/lake.jpg' \
     --prompt 'please describe the scene.' \
     --prompt 'are there any hazards to be aware of?'
-'''
+```
 
-A savoir que le premier prompt doit etre le chemin de l'image à fournir et que reset permet d'effacer l'historique de discution et de fournir une nouvelle image.
+📌 **Note :**
+- Le premier prompt doit contenir le chemin de l'image à analyser.
+- Le mot-clé `reset` permet de réinitialiser l'historique de discussion et de soumettre une nouvelle image.
 
-3. Questionner VILA en mode direct
+## 3. Questionner VILA en mode direct
 
-'''bash
+```bash
 jetson-containers run $(autotag nano_llm) \
   python3 -m nano_llm.agents.video_query --api=mlc \
     --model Efficient-Large-Model/VILA1.5-3b \
@@ -51,5 +66,8 @@ jetson-containers run $(autotag nano_llm) \
     --max-new-tokens 32 \
     --video-input /dev/video0 \
     --video-output webrtc://@:8554/output
-'''
+```
 
+---
+
+Ce guide fournit une procédure claire pour utiliser **VILA** sur la **Jetson Orin Nano**. Pour plus de détails, reportez-vous à la documentation officielle de NVIDIA.
