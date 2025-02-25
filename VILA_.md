@@ -1,12 +1,12 @@
-# Installation et Lancement de VILA
+# Installation and Launch of VILA
 
-Ce guide explique comment installer et lancer **VILA** sur la carte **Jetson Orin Nano**.
+This guide explains how to install and run **VILA** on the **Jetson Orin Nano** board.
 
-Nous avons suivi le tutoriel du laboratoire NVIDIA pour réaliser cette installation : [https://www.jetson-ai-lab.com/tutorial_nano-vlm.html](#)
+We followed the NVIDIA lab tutorial to perform this installation: [https://www.jetson-ai-lab.com/tutorial_nano-vlm.html](#)
 
-## 1. Installation de NanoLLM et VILA
+## 1. Installing NanoLLM and VILA
 
-Exécutez la commande suivante pour installer et exécuter **NanoLLM** et **VILA** :
+Run the following command to install and execute **NanoLLM** and **VILA**:
 
 ```bash
 jetson-containers run $(autotag nano_llm) \
@@ -15,27 +15,27 @@ jetson-containers run $(autotag nano_llm) \
     --max-context-len 64 \
     --max-new-tokens 32
 ```
-Après installation, le modèle VILA sera automatiquement lancé et vous pourrez le questionner.
+After installation, the VILA model will be automatically launched, and you can start querying it.
 
-## 2. Questionner VILA sur une image
+## 2. Querying VILA on an Image
 
-**Remarque :** Les images doivent être placées dans le répertoire `jetson-containers/data/images/`.
+**Note:** Images must be placed in the `jetson-containers/data/images/` directory.
 
-Pour lui poser des questions, écrire dans l'interface ouverte après lancement :
+To ask questions, type in the interface that opens after launching:
 ```bash
->> PROMPT: /data/images/mon_image.png
+>> PROMPT: /data/images/my_image.png
 
->> PROMPT: Je pose ma question ici.
+>> PROMPT: I ask my question here.
 ```
 
-N'hésitez pas à réinitialiser le questionnement pour fournir une autre image ou éviter que le modèle ne se base sur ses réponses précédentes à l'aide de **reset** :
+Feel free to reset the questioning process to provide another image or prevent the model from relying on previous answers using **reset**:
 ```bash
 >> PROMPT: reset
 ```
 
-### Préparer des prompts en avance
+### Preparing Prompts in Advance
 
-Vous pouvez structurer vos questions en amont comme suit :
+You can structure your questions in advance as follows:
 
 ```bash
 jetson-containers run $(autotag nano_llm) \
@@ -52,11 +52,11 @@ jetson-containers run $(autotag nano_llm) \
     --prompt 'are there any hazards to be aware of?'
 ```
 
-📌 **Note :**
-- Le premier prompt doit contenir le chemin de l'image à analyser.
-- Le mot-clé `reset` permet de réinitialiser l'historique de discussion et de soumettre une nouvelle image.
+📌 **Note:**
+- The first prompt must contain the path of the image to analyze.
+- The `reset` keyword resets the discussion history and allows for submitting a new image.
 
-## 3. Questionner VILA en mode direct
+## 3. Querying VILA in Direct Mode
 
 ```bash
 jetson-containers run $(autotag nano_llm) \
@@ -70,4 +70,4 @@ jetson-containers run $(autotag nano_llm) \
 
 ---
 
-Ce guide fournit une procédure claire pour utiliser **VILA** sur la **Jetson Orin Nano**. Pour plus de détails, reportez-vous à la documentation officielle de NVIDIA.
+This guide provides a clear procedure for using **VILA** on the **Jetson Orin Nano**. For more details, refer to the official NVIDIA documentation.
